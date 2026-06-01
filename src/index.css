@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 
 * {
@@ -11,8 +12,17 @@ html {
 }
 
 body {
-  background-color: #0a0a0a;
-  color: #f0f0f0;
+  background-color: #ffffff;
+  color: #111111;
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
+}
+
+/* Scrollbar oculto pero funcional */
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}
+.scroll-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

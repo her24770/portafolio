@@ -1,9 +1,10 @@
-function App() {
+import HomeLayout from './components/HomeLayout'
+import ContentPanel from './sections/ContentPanel'
+
+export default function App() {
   return (
-    <main>
-      <h1>Portfolio</h1>
-    </main>
+    <HomeLayout>
+      <ContentPanel />
+    </HomeLayout>
   )
 }
-
-export default App
