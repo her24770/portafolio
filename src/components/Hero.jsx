@@ -16,7 +16,46 @@ function NavLink({ href, active, children }) {
   )
 }
 
-export default function Hero({ progress }) {
+const NAV_ITEMS = [
+  { id: 'about',     label: 'Sobre mí'   },
+  { id: 'proyectos', label: 'Proyectos'  },
+  { id: 'stack',     label: 'Stack'      },
+  { id: 'contacto',  label: 'Contacto'   },
+]
+
+function SideNav({ activeSection }) {
+  return (
+    <nav style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      {NAV_ITEMS.map(({ id, label }) => {
+        const isActive = activeSection === id
+        return (
+          <a key={id} href={`#${id}`} style={{
+            display: 'flex', alignItems: 'center', gap: '0.75rem',
+            textDecoration: 'none',
+          }}>
+            <span style={{
+              display: 'block', height: '1.5px',
+              width: isActive ? '2rem' : '0.875rem',
+              background: isActive ? 'var(--ink)' : 'var(--ink-3)',
+              transition: 'width 0.35s ease, background 0.35s ease',
+              flexShrink: 0,
+            }} />
+            <span style={{
+              fontSize: '0.7rem', fontWeight: 600,
+              letterSpacing: '0.14em', textTransform: 'uppercase',
+              color: isActive ? 'var(--ink)' : 'var(--ink-3)',
+              transition: 'color 0.35s ease',
+            }}>
+              {label}
+            </span>
+          </a>
+        )
+      })}
+    </nav>
+  )
+}
+
+export default function Hero({ progress, activeSection }) {
   const mx  = useMotionValue(0)
   const my  = useMotionValue(0)
   const smx = useSpring(mx, { stiffness: 70, damping: 20 })
@@ -37,24 +76,24 @@ export default function Hero({ progress }) {
   const c3x    = useTransform(smx, [-1, 1], [24, -24])
   const c3y    = useTransform(smy, [-1, 1], [-20, 20])
 
-  // Offsets en vw/vh
-  // Eyebrow: sube hasta top izquierdo sin salirse del overflow-hidden del hero
-  const eyebrowX = useTransform(progress, [0, 1], ['0vw',   '0vw'])
-  const eyebrowY = useTransform(progress, [0, 1], ['-36vh', '0vh'])
+  const eyebrowX = useTransform(progress, [0, 1], ['0vw',  '0vw'])
+  const eyebrowY = useTransform(progress, [0, 1], ['2vh',  '0vh'])
 
-  const nameX    = useTransform(progress, [0, 1], ['10vw',  '0vw'])
-  const nameY    = useTransform(progress, [0, 1], ['-32vh', '0vh'])
+  const nameX    = useTransform(progress, [0, 1], ['10vw', '0vw'])
+  const nameY    = useTransform(progress, [0, 1], ['8vh',  '0vh'])
 
-  // Rol + desc: más abajo
   const roleX    = useTransform(progress, [0, 1], ['2vw',  '0vw'])
-  const roleY    = useTransform(progress, [0, 1], ['-20vh', '0vh'])
+  const roleY    = useTransform(progress, [0, 1], ['22vh', '0vh'])
 
   const descX    = useTransform(progress, [0, 1], ['2vw',  '0vw'])
-  const descY    = useTransform(progress, [0, 1], ['-14vh', '0vh'])
+  const descY    = useTransform(progress, [0, 1], ['22vh', '0vh'])
 
-  // Chips: bien donde están
-  const chipsX   = useTransform(progress, [0, 1], ['14vw', '0vw'])
-  const chipsY   = useTransform(progress, [0, 1], ['1vh',  '0vh'])
+  const chipsX   = useTransform(progress, [0, 1], ['4vw',  '0vw'])
+  const chipsY   = useTransform(progress, [0, 1], ['24vh', '0vh'])
+
+  // Descripción se va, nav aparece
+  const descTextOpacity = useTransform(progress, [0, 0.45], [1, 0])
+  const sideNavOpacity  = useTransform(progress, [0.55, 1], [0, 1])
 
   const onMove  = (e) => {
     mx.set((e.clientX / window.innerWidth  - 0.5) * 2)
@@ -134,7 +173,7 @@ export default function Hero({ progress }) {
       <div style={{
         position: 'absolute',
         left: 'clamp(2rem, 4vw, 5rem)',
-        bottom: 'clamp(3.5rem, 8vh, 6rem)',
+        top: 'clamp(5rem, 10vh, 8rem)',
         width: '62%',
         zIndex: 5,
       }}>
@@ -183,21 +222,27 @@ export default function Hero({ progress }) {
           </p>
         </motion.div>
 
-        {/* Descripción */}
-        <motion.div style={{ x: descX, y: descY }}
+        {/* Desc ↔ SideNav — mismo slot, altura fija para evitar gaps */}
+        <motion.div
+          style={{ x: descX, y: descY }}
           initial={{ opacity: 0 }} animate={{ opacity: 1 }}
           transition={{ delay: 0.44, duration: 0.7 }}
         >
-          <p style={{
-            marginTop: '0.5rem',
-            fontSize: 'clamp(0.825rem, 1vw, 0.95rem)',
-            lineHeight: 1.6,
-            color: 'var(--ink-3)',
-            maxWidth: '34ch',
-          }}>
-            Construyo experiencias web limpias, rápidas y con carácter —
-            donde el movimiento tiene sentido y cada detalle suma.
-          </p>
+          <div style={{ position: 'relative', height: '7rem', marginTop: '0.5rem' }}>
+            <motion.p style={{
+              position: 'absolute', top: 0, left: 0, margin: 0,
+              opacity: descTextOpacity,
+              fontSize: 'clamp(0.825rem, 1vw, 0.95rem)',
+              lineHeight: 1.6, color: 'var(--ink-3)', maxWidth: '34ch',
+              pointerEvents: 'none',
+            }}>
+              Construyo experiencias web limpias, rápidas y con carácter —
+              donde el movimiento tiene sentido y cada detalle suma.
+            </motion.p>
+            <motion.div style={{ position: 'absolute', top: 0, left: 0, opacity: sideNavOpacity }}>
+              <SideNav activeSection={activeSection} />
+            </motion.div>
+          </div>
         </motion.div>
 
         {/* Chips — todas juntas, wrap natural en sidebar */}
@@ -206,7 +251,7 @@ export default function Hero({ progress }) {
           transition={{ delay: 0.56, duration: 0.7 }}
         >
           <div style={{
-            display: 'flex', flexWrap: 'nowrap',
+            display: 'flex', flexWrap: 'wrap',
             gap: '0.5rem', marginTop: '1.5rem',
           }}>
             <a className="chip" href="https://linkedin.com" target="_blank" rel="noreferrer">

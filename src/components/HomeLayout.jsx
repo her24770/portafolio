@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, useSpring, useTransform, useMotionValue } from 'framer-motion'
 import Hero from './Hero'
 
-export default function HomeLayout({ children }) {
+export default function HomeLayout({ children, activeSection }) {
   const rawProgress = useMotionValue(0)
   const progress = useSpring(rawProgress, { stiffness: 55, damping: 18, mass: 1 })
 
@@ -52,7 +52,7 @@ export default function HomeLayout({ children }) {
         className="relative z-20 h-full flex-shrink-0 overflow-hidden"
         style={{ width: heroWidth, background: 'var(--bg)' }}
       >
-        <Hero progress={progress} />
+        <Hero progress={progress} activeSection={activeSection} />
       </motion.div>
 
       {/* Panel derecho — contenido scrolleable */}
