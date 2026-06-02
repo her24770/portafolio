@@ -1,4 +1,6 @@
 import { useState, useRef, useEffect, useLayoutEffect, useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import Panel from './Panel'
 
 /* ── helpers ── */
@@ -55,6 +57,7 @@ function ringPlace(i, n, rot, L) {
 
 export default function Gallery({ projects }) {
   const N = projects.length
+  const navigate    = useNavigate()
   const stageRef    = useRef(null)
   const itemRefs    = useRef([])
   const layoutRef   = useRef(computeLayout(N))
@@ -67,6 +70,20 @@ export default function Gallery({ projects }) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [dir, setDir]                 = useState(1)
   const [introReady, setIntroReady]   = useState(false)
+  const [transitionData, setTransitionData] = useState(null)
+
+  const handleNavigate = useCallback((index, origin, orbR) => {
+    const project = projects[index]
+    const W = window.innerWidth, H = window.innerHeight
+    const far = Math.hypot(
+      Math.max(origin.x, W - origin.x),
+      Math.max(origin.y, H - origin.y)
+    ) + 120
+    setTransitionData({ project, index, origin, orbR, far })
+    setTimeout(() => {
+      navigate(`/projects/${index}`, { state: { origin } })
+    }, 820)
+  }, [navigate, projects])
 
   const applyFrame = useCallback(() => {
     const L = layoutRef.current
@@ -229,7 +246,41 @@ export default function Gallery({ projects }) {
       <Panel
         index={activeIndex} dir={dir} total={N}
         projects={projects} panelRef={panelRef}
+        onNavigate={handleNavigate}
       />
+
+      {transitionData && (
+        <>
+          {/* Fade gallery to background */}
+          <motion.div
+            style={{ position: 'fixed', inset: 0, zIndex: 2998, background: 'var(--bg)', pointerEvents: 'none' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.45 }}
+          />
+          {/* Expand orb image and fade it */}
+          <motion.div
+            style={{
+              position: 'fixed', inset: 0, zIndex: 2999,
+              backgroundImage: `url(${transitionData.project.image})`,
+              backgroundSize: 'cover', backgroundPosition: 'center',
+              pointerEvents: 'none',
+            }}
+            initial={{
+              clipPath: `circle(${transitionData.orbR}px at ${transitionData.origin.x}px ${transitionData.origin.y}px)`,
+              opacity: 1,
+            }}
+            animate={{
+              clipPath: `circle(${transitionData.far}px at ${transitionData.origin.x}px ${transitionData.origin.y}px)`,
+              opacity: 0,
+            }}
+            transition={{
+              clipPath: { duration: 0.82, ease: [0.76, 0, 0.24, 1] },
+              opacity:  { duration: 0.72, ease: 'easeIn' },
+            }}
+          />
+        </>
+      )}
 
       <div className="pg-wheel">
         {projects.map((p, i) => (

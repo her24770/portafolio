@@ -1,12 +1,22 @@
 import { useState, useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
 import Navbar from '../../../components/Navbar'
 import Icon from '../../../components/Icon'
 
-export default function Panel({ index, dir, total, projects, panelRef }) {
+export default function Panel({ index, dir, total, projects, panelRef, onNavigate }) {
   const p = projects[index]
   const [anim, setAnim] = useState('')
   const first = useRef(true)
+
+  const openDetail = () => {
+    const W = window.innerWidth, H = window.innerHeight
+    const panelW = Math.max(400, W * 0.42)
+    const rightW = W - panelW
+    const D = Math.min(Math.max(Math.min(rightW * 0.64, H * 0.5), 240), 430)
+    const x = panelW + rightW * 0.46
+    const y = H * 0.5
+    const orbR = (D * 1.38) / 2
+    onNavigate(index, { x, y }, orbR)
+  }
 
   useEffect(() => {
     if (first.current) { first.current = false; return }
@@ -48,9 +58,9 @@ export default function Panel({ index, dir, total, projects, panelRef }) {
               <span className={'tag' + (j === 0 ? ' k' : '')} key={t}>{t}</span>
             ))}
           </div>
-          <a href={p.url} className="btn" style={{ alignSelf: 'flex-start' }}>
+          <button className="btn" style={{ alignSelf: 'flex-start' }} onClick={openDetail}>
             Ver proyecto <Icon name="arrow" width={15} height={15} />
-          </a>
+          </button>
         </div>
       </div>
 

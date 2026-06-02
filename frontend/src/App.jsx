@@ -4,6 +4,7 @@ import { ThemeProvider } from './contexts/ThemeContext'
 import HomeLayout from './components/HomeLayout'
 import ContentPanel from './sections/ContentPanel'
 import ProjectsPage from './pages/projects/ProjectsPage'
+import ProjectDetail from './pages/projects/detail/ProjectDetail'
 
 function HomePage() {
   const [activeSection, setActiveSection] = useState('about')
@@ -21,6 +22,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/projects/:id" element={<ProjectDetail />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
