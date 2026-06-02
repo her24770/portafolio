@@ -8,31 +8,101 @@ Tengo un portafolio personal con una base de datos PostgreSQL que almacena mis p
 
 ## Esquema de la tabla `projects`
 
-| Campo                | Tipo    | Requerido | Descripción |
-|----------------------|---------|-----------|-------------|
-| `title`              | string  | ✅        | Nombre del proyecto, legible y con mayúsculas correctas |
-| `slug`               | string  | ✅        | Versión URL del título, solo minúsculas, guiones en lugar de espacios. Ej: `"uvg-help"` |
-| `description`        | string  | ✅        | Texto corto para la card — máximo 2-3 líneas, orientado al visitante del portafolio. Debe enganchar y resumir el valor del proyecto |
-| `content`            | string  | ✅        | Explicación general del proyecto: qué es, para qué sirve y cómo funciona a grandes rasgos |
-| `thumbnail_url`      | string  | ❌        | URL de la imagen principal. `null` si no hay |
-| `images`             | array   | ❌        | Array de URLs de screenshots adicionales. `[]` si no hay |
-| `technologies`       | array   | ✅        | Array de strings con los nombres exactos de las tecnologías usadas. Usar nombres generales: `"React"`, `"FastAPI"`, `"PostgreSQL"`, `"Docker"`. No inventar nombres que no existan en la lista de tecnologías del sistema |
-| `category`           | string  | ✅        | Una de estas opciones exactas: `"ai"`, `"fullstack"`, `"backend"`, `"frontend"` |
-| `demo_url`           | string  | ❌        | URL del proyecto en producción. `null` si no está desplegado |
-| `repo_urls`          | array   | ❌        | Array de URLs de repositorios en GitHub. `[]` si son privados o no existen. Puede tener más de uno (ej: frontend y backend separados) |
-| `featured`           | boolean | ✅        | `true` si es uno de los proyectos más importantes/representativos. Máximo 3-4 proyectos |
-| `order`              | integer | ✅        | Posición en la lista (0 = primero). Asigna según importancia o impacto |
-| `status`             | string  | ✅        | `"completed"` si está terminado, `"in_progress"` si aún está en desarrollo |
-| `year`               | integer | ✅        | Año en que se desarrolló o lanzó el proyecto. Ej: `2024` |
-| `problem_solved`     | string  | ✅        | Una línea concisa explicando qué problema resuelve este proyecto |
-| `architecture`       | string  | ✅        | Decisiones de arquitectura: por qué se eligió este stack, cómo están organizados los servicios, patrones usados |
-| `challenges`         | string  | ✅        | Qué fue técnicamente difícil y cómo se resolvió |
-| `what_i_learned`     | string  | ✅        | Qué aprendiste construyendo este proyecto |
-| `would_do_different` | string  | ✅        | Qué harías diferente si lo construyeras hoy |
-| `setup_instructions` | string  | ✅        | Cómo levantar el proyecto localmente o con Docker, paso a paso |
-| `team_size`          | integer | ✅        | `1` si fue solo, `2` o más si fue en equipo |
-| `team_description`   | string  | ❌        | Quién más participó y en qué rol. `null` si fue solo |
-| `role`               | string  | ✅        | Tu rol específico en el proyecto. Ej: `"Solo dev"`, `"Full-stack"`, `"Backend lead"`, `"Frontend"` |
+### Identificación
+
+**`title`** ✅ `string`
+El nombre del proyecto tal como aparecerá en el portafolio. Legible, con mayúsculas correctas. Ej: `"UVG Help"`, `"Portfolio API"`.
+
+**`slug`** ✅ `string`
+Versión URL del título: solo minúsculas, palabras separadas por guiones, sin caracteres especiales. Se usa en la ruta del detalle del proyecto. Ej: `"uvg-help"`, `"portfolio-api"`.
+
+---
+
+### Descripción pública
+
+**`description`** ✅ `string`
+Texto corto que aparece en la card del proyecto en el portafolio. Máximo 2-3 líneas. Debe enganchar al visitante y comunicar el valor del proyecto de forma directa. No es un resumen técnico, es una presentación.
+
+**`content`** ✅ `string`
+Explicación general del proyecto: qué es, para qué existe y cómo funciona a grandes rasgos. Este campo es el cuerpo principal de la vista de detalle. No entrar en detalles técnicos profundos aquí — esos van en sus campos dedicados.
+
+**`thumbnail_url`** ❌ `string | null`
+URL de la imagen principal que se muestra en la card. Dejar `null` si no hay imagen disponible todavía.
+
+**`images`** ❌ `array`
+Array de URLs de screenshots o imágenes adicionales del proyecto (capturas de pantalla, diagramas, etc.). Dejar `[]` si no hay.
+
+---
+
+### Clasificación
+
+**`technologies`** ✅ `array`
+Array de strings con los nombres de las tecnologías usadas. Usar los nombres exactos del catálogo del sistema: `"React"`, `"FastAPI"`, `"PostgreSQL"`, `"Docker"`, `"TypeScript"`, etc. No inventar nombres que no existan en la lista. Si una tecnología no está en el catálogo, omitirla.
+
+**`category`** ✅ `string`
+Categoría principal del proyecto. Debe ser exactamente una de estas opciones:
+- `"ai"` — el valor principal del proyecto está en la integración con IA
+- `"fullstack"` — tiene frontend y backend propios
+- `"backend"` — API, servicio, script, sin frontend propio
+- `"frontend"` — interfaz visual sin backend propio
+
+**`status`** ✅ `string`
+- `"completed"` — el proyecto está terminado y funcional
+- `"in_progress"` — aún está en desarrollo activo
+
+**`year`** ✅ `integer`
+Año en que se desarrolló o lanzó el proyecto. Si duró varios años, poner el año en que se terminó o en que estuvo más activo. Ej: `2024`.
+
+**`featured`** ✅ `boolean`
+`true` si es uno de los proyectos más representativos del portafolio. Solo marcar como featured los 3-4 proyectos más fuertes. El resto va en `false`.
+
+**`order`** ✅ `integer`
+Posición en la lista de proyectos (0 = primero). Asignar según importancia, impacto o relevancia. Los featured deberían tener los números más bajos.
+
+---
+
+### Links
+
+**`demo_url`** ❌ `string | null`
+URL donde el proyecto está desplegado y se puede ver en vivo. `null` si no está en producción o el link ya no está activo.
+
+**`repo_urls`** ❌ `array`
+Array de URLs de repositorios en GitHub. Puede tener más de uno si el proyecto tiene repos separados (ej: frontend y backend). Dejar `[]` si los repos son privados o no existen.
+
+---
+
+### Profundidad técnica
+
+**`problem_solved`** ✅ `string`
+Una sola línea, concisa y clara, explicando qué problema concreto resuelve este proyecto. Ej: `"Los estudiantes de UVG no tenían un lugar centralizado para compartir apuntes y resolver dudas entre compañeros"`.
+
+**`architecture`** ✅ `string`
+Explicación de las decisiones de arquitectura: por qué se eligió este stack, cómo están organizados los servicios o capas, qué patrones se aplicaron (MVC, repositorio, eventos, etc.) y por qué. No es una lista de tecnologías — es el razonamiento detrás de cómo se construyó.
+
+**`challenges`** ✅ `string`
+Qué fue técnicamente difícil durante el desarrollo y cómo se resolvió. Puede incluir problemas de performance, decisiones difíciles de diseño, bugs complejos, limitaciones de infraestructura, etc.
+
+**`what_i_learned`** ✅ `string`
+Qué aprendiste construyendo este proyecto que no sabías antes o que consolidaste. Puede ser técnico (una tecnología, un patrón) o de proceso (cómo planear mejor, cómo trabajar en equipo).
+
+**`would_do_different`** ✅ `string`
+Con lo que sabes hoy, qué cambiarías si lo construyeras desde cero. Puede ser de arquitectura, de stack, de scope, de proceso. Esto muestra madurez técnica.
+
+**`setup_instructions`** ✅ `string`
+Instrucciones paso a paso para levantar el proyecto localmente o con Docker. Incluir: requisitos previos, variables de entorno necesarias, comandos para correrlo. Debe ser suficientemente claro para que alguien más pueda levantarlo sin preguntar.
+
+---
+
+### Equipo
+
+**`team_size`** ✅ `integer`
+Número de personas que trabajaron en el proyecto. `1` si fue un proyecto solo, `2` o más si fue en equipo.
+
+**`team_description`** ❌ `string | null`
+Si fue en equipo, describir quién más participó y en qué rol. Ej: `"Trabajé con un diseñador UX que hizo los wireframes y un compañero que desarrolló el módulo de pagos"`. Dejar `null` si fue un proyecto solo.
+
+**`role`** ✅ `string`
+Tu rol específico dentro del proyecto. Ej: `"Solo dev"`, `"Full-stack"`, `"Backend lead"`, `"Frontend"`, `"Tech lead"`.
 
 ---
 
