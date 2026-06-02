@@ -1,20 +1,9 @@
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion'
 import Icon from './Icon'
+import Navbar from './Navbar'
+import { useTheme } from '../contexts/ThemeContext'
 
 const PHOTO = '/assets/perfil.png'
-
-function NavLink({ href, active, children }) {
-  return (
-    <a href={href} style={{
-      fontSize: '0.9rem', fontWeight: 500,
-      color: active ? 'var(--ink)' : 'var(--ink-2)',
-      padding: '0.25rem 0.125rem',
-      transition: 'color .25s ease',
-    }}>
-      {children}
-    </a>
-  )
-}
 
 const NAV_ITEMS = [
   { id: 'about',     label: 'Sobre mí'   },
@@ -55,7 +44,7 @@ function SideNav({ activeSection }) {
   )
 }
 
-function MobileHero({ theme, onThemeToggle }) {
+function MobileHero() {
   return (
     <div style={{
       minHeight: '100svh', display: 'flex', flexDirection: 'column',
@@ -63,16 +52,7 @@ function MobileHero({ theme, onThemeToggle }) {
       background: 'var(--bg)', position: 'relative', overflow: 'hidden',
     }}>
       <nav style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', marginBottom: 'auto' }}>
-        <NavLink href="#home" active>Home</NavLink>
-        <NavLink href="#stack">Stack</NavLink>
-        <NavLink href="#proyectos">Proyectos</NavLink>
-        <button onClick={onThemeToggle} style={{
-          marginLeft: 'auto', background: 'none', border: 'none',
-          cursor: 'pointer', padding: '0.375rem', color: 'var(--ink-3)',
-          display: 'flex', alignItems: 'center', borderRadius: '0.5rem',
-        }}>
-          <Icon name={theme === 'dark' ? 'sun' : 'moon'} width={17} height={17} />
-        </button>
+        <Navbar />
       </nav>
 
       {/* Foto — derecha, anclada abajo */}
@@ -127,8 +107,9 @@ function MobileHero({ theme, onThemeToggle }) {
   )
 }
 
-export default function Hero({ progress, activeSection, contentScroll, theme, onThemeToggle, isMobile }) {
-  if (isMobile) return <MobileHero theme={theme} onThemeToggle={onThemeToggle} />
+export default function Hero({ progress, activeSection, contentScroll, isMobile }) {
+  const { theme } = useTheme()
+  if (isMobile) return <MobileHero />
   const mx  = useMotionValue(0)
   const my  = useMotionValue(0)
   const smx = useSpring(mx, { stiffness: 70, damping: 20 })
@@ -184,21 +165,7 @@ export default function Hero({ progress, activeSection, contentScroll, theme, on
         gap: 'clamp(0.875rem, 1.8vw, 2rem)',
         padding: 'clamp(1.25rem, 3vh, 2.5rem) clamp(1.5rem, 3.4vw, 3.75rem)',
       }}>
-        <NavLink href="#home" active>Home</NavLink>
-        <NavLink href="#proyectos">Proyectos</NavLink>
-        <NavLink href="#about">About</NavLink>
-        <button onClick={onThemeToggle} style={{
-          marginLeft: 'auto', background: 'none', border: 'none',
-          cursor: 'pointer', padding: '0.375rem',
-          color: 'var(--ink-3)', display: 'flex', alignItems: 'center',
-          borderRadius: '0.5rem',
-          transition: 'color .25s ease',
-        }}
-          onMouseEnter={e => e.currentTarget.style.color = 'var(--ink)'}
-          onMouseLeave={e => e.currentTarget.style.color = 'var(--ink-3)'}
-        >
-          <Icon name={theme === 'dark' ? 'sun' : 'moon'} width={17} height={17} />
-        </button>
+        <Navbar />
       </nav>
 
       {/* ── Stage: foto + cards flotantes ── */}
