@@ -425,9 +425,10 @@ button { font-family: inherit; cursor: pointer; }
 @media (max-width: 820px) {
   .pg-panel {
     width: 100vw; min-width: 0; padding: 28px 26px;
-    background: linear-gradient(180deg, var(--bg) 55%, transparent);
+    background: linear-gradient(180deg, var(--bg) 75%, transparent);
   }
   .pg-desc { display: none; }
+  .pg-panel .tags { max-width: 58%; }
 }
 
 /* ── mobile ── */

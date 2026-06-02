@@ -67,7 +67,7 @@ function MobileHero() {
         }}
       />
 
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '0.75rem', paddingTop: '2rem', position: 'relative', zIndex: 1, maxWidth: '62%' }}>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gap: '0.75rem', paddingTop: 'clamp(1.5rem, 5vh, 3rem)', paddingBottom: 'clamp(1rem, 3vh, 2rem)', position: 'relative', zIndex: 1, maxWidth: '58%' }}>
         <p className="eyebrow" style={{ margin: 0 }}>
           <span className="pip" /> Portafolio · 2026
         </p>
