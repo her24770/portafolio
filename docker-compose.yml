@@ -1,0 +1,49 @@
+services:
+  portfolio-frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "${FRONTEND_PORT}:80"
+    networks:
+      - portfolio-network
+    restart: unless-stopped
+
+  portfolio-backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "${APP_PORT}:8000"
+    env_file:
+      - ./.env
+    networks:
+      - portfolio-network
+    depends_on:
+      portfolio-db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  portfolio-db:
+    image: postgres:15
+    env_file:
+      - ./.env
+    expose:
+      - "5432"
+    volumes:
+      - portfolio-db-data:/var/lib/postgresql/data
+    networks:
+      - portfolio-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+networks:
+  portfolio-network:
+    driver: bridge
+
+volumes:
+  portfolio-db-data:
