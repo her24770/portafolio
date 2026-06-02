@@ -53,7 +53,7 @@ export default function Hero({ progress }) {
   const descY    = useTransform(progress, [0, 1], ['-14vh', '0vh'])
 
   // Chips: bien donde están
-  const chipsX   = useTransform(progress, [0, 1], ['23vw', '0vw'])
+  const chipsX   = useTransform(progress, [0, 1], ['14vw', '0vw'])
   const chipsY   = useTransform(progress, [0, 1], ['1vh',  '0vh'])
 
   const onMove  = (e) => {
