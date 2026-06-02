@@ -1,37 +1,33 @@
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion'
-// motion sigue usado en stage, cards y scroll cue
 import Icon from './Icon'
 
 const PHOTO = '/assets/perfil.png'
 
 function NavLink({ href, active, children }) {
   return (
-    <a
-      href={href}
-      style={{
-        position: 'relative',
-        fontSize: 15,
-        fontWeight: 500,
-        color: active ? 'var(--ink)' : 'var(--ink-2)',
-        padding: '4px 2px',
-        transition: 'color .25s ease',
-      }}
-    >
+    <a href={href} style={{
+      fontSize: '0.9rem', fontWeight: 500,
+      color: active ? 'var(--ink)' : 'var(--ink-2)',
+      padding: '0.25rem 0.125rem',
+      transition: 'color .25s ease',
+    }}>
       {children}
     </a>
   )
 }
 
 export default function Hero({ progress }) {
-  const mx = useMotionValue(0)
-  const my = useMotionValue(0)
+  const mx  = useMotionValue(0)
+  const my  = useMotionValue(0)
   const smx = useSpring(mx, { stiffness: 70, damping: 20 })
   const smy = useSpring(my, { stiffness: 70, damping: 20 })
 
+  // Stage
   const stageOpacity     = useTransform(progress, [0, 0.82], [1, 0])
   const stageX           = useTransform(progress, [0, 1], ['0%', '20%'])
   const scrollCueOpacity = useTransform(progress, [0, 0.28], [1, 0])
 
+  // Parallax
   const photoX = useTransform(smx, [-1, 1], [14, -14])
   const photoY = useTransform(smy, [-1, 1], [10, -10])
   const c1x    = useTransform(smx, [-1, 1], [-22, 22])
@@ -41,8 +37,27 @@ export default function Hero({ progress }) {
   const c3x    = useTransform(smx, [-1, 1], [24, -24])
   const c3y    = useTransform(smy, [-1, 1], [-20, 20])
 
+  // Offsets en vw/vh
+  // Eyebrow: sube hasta top izquierdo sin salirse del overflow-hidden del hero
+  const eyebrowX = useTransform(progress, [0, 1], ['0vw',   '0vw'])
+  const eyebrowY = useTransform(progress, [0, 1], ['-36vh', '0vh'])
+
+  const nameX    = useTransform(progress, [0, 1], ['10vw',  '0vw'])
+  const nameY    = useTransform(progress, [0, 1], ['-32vh', '0vh'])
+
+  // Rol + desc: más abajo
+  const roleX    = useTransform(progress, [0, 1], ['2vw',  '0vw'])
+  const roleY    = useTransform(progress, [0, 1], ['-20vh', '0vh'])
+
+  const descX    = useTransform(progress, [0, 1], ['2vw',  '0vw'])
+  const descY    = useTransform(progress, [0, 1], ['-14vh', '0vh'])
+
+  // Chips: bien donde están
+  const chipsX   = useTransform(progress, [0, 1], ['23vw', '0vw'])
+  const chipsY   = useTransform(progress, [0, 1], ['1vh',  '0vh'])
+
   const onMove  = (e) => {
-    mx.set((e.clientX / window.innerWidth - 0.5) * 2)
+    mx.set((e.clientX / window.innerWidth  - 0.5) * 2)
     my.set((e.clientY / window.innerHeight - 0.5) * 2)
   }
   const onLeave = () => { mx.set(0); my.set(0) }
@@ -52,19 +67,17 @@ export default function Hero({ progress }) {
 
       {/* ── Navbar ── */}
       <nav style={{
-        position: 'absolute', top: 0, left: 0, right: 0,
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: 'clamp(22px, 3vh, 40px) clamp(26px, 3.4vw, 60px)',
-        zIndex: 10,
+        position: 'absolute', top: 0, left: 0, right: 0, zIndex: 10,
+        display: 'flex', alignItems: 'center',
+        gap: 'clamp(0.875rem, 1.8vw, 2rem)',
+        padding: 'clamp(1.25rem, 3vh, 2.5rem) clamp(1.5rem, 3.4vw, 3.75rem)',
       }}>
-        <div style={{ display: 'flex', gap: 'clamp(14px, 1.8vw, 30px)' }}>
-          <NavLink href="#home" active>Home</NavLink>
-          <NavLink href="#proyectos">Proyectos</NavLink>
-          <NavLink href="#about">About</NavLink>
-        </div>
+        <NavLink href="#home" active>Home</NavLink>
+        <NavLink href="#proyectos">Proyectos</NavLink>
+        <NavLink href="#about">About</NavLink>
       </nav>
 
-      {/* ── Stage: foto + cards (se desvanece al scrollear) ── */}
+      {/* ── Stage: foto + cards flotantes ── */}
       <motion.div style={{
         position: 'absolute', top: 0, right: 0,
         width: '56%', height: '100%',
@@ -72,31 +85,24 @@ export default function Hero({ progress }) {
         pointerEvents: 'none', zIndex: 2,
       }}>
         <motion.img
-          src={PHOTO}
-          alt="Josué Hernández"
+          src={PHOTO} alt="Josué Hernández"
           style={{
-            position: 'absolute',
-            right: 'clamp(0px, 2vw, 60px)',
-            bottom: 0,
-            height: '86%',
-            width: 'auto',
-            objectFit: 'contain',
-            objectPosition: 'bottom center',
-            filter: 'drop-shadow(0 40px 60px rgba(27,26,21,0.18))',
+            position: 'absolute', right: '2vw', bottom: 0,
+            height: '86%', width: 'auto',
+            objectFit: 'contain', objectPosition: 'bottom center',
+            filter: 'drop-shadow(0 2.5rem 3.75rem rgba(27,26,21,0.18))',
             x: photoX, y: photoY,
           }}
         />
 
-        {/* Card 1 — stat */}
         <motion.div className="fcard" style={{
-          position: 'absolute', top: '16%', right: '4%', width: 168,
+          position: 'absolute', top: '16%', right: '4%', width: '10.5rem',
           x: c1x, y: c1y, pointerEvents: 'auto',
         }}>
           <div className="fc-label">Proyectos</div>
           <div className="fc-big"><span className="accent">12</span> entregados</div>
         </motion.div>
 
-        {/* Card 2 — role */}
         <motion.div className="fcard" style={{
           position: 'absolute', top: '44%', left: '-2%',
           x: c2x, y: c2y, pointerEvents: 'auto',
@@ -108,14 +114,11 @@ export default function Hero({ progress }) {
               <div className="fc-role-sub">Frontend Developer</div>
             </div>
           </div>
-          <div className="status">
-            <span className="live" /> Disponible para proyectos
-          </div>
+          <div className="status"><span className="live" /> Disponible para proyectos</div>
         </motion.div>
 
-        {/* Card 3 — skill bars */}
         <motion.div className="fcard" style={{
-          position: 'absolute', bottom: '22%', right: '9%', width: 186,
+          position: 'absolute', bottom: '22%', right: '9%', width: '11.625rem',
           x: c3x, y: c3y, pointerEvents: 'auto',
         }}>
           <div className="fc-label">Stack favorito</div>
@@ -127,55 +130,106 @@ export default function Hero({ progress }) {
         </motion.div>
       </motion.div>
 
-      {/* ── Identity block (siempre visible, queda en sidebar) ── */}
+      {/* ── Identity block ── */}
       <div style={{
         position: 'absolute',
-        left: 'clamp(26px, 3.4vw, 60px)',
-        bottom: 'clamp(96px, 16vh, 150px)',
-        width: 'min(440px, calc(35vw - 48px))',
+        left: 'clamp(2rem, 4vw, 5rem)',
+        bottom: 'clamp(3.5rem, 8vh, 6rem)',
+        width: '62%',
         zIndex: 5,
       }}>
-        <p className="eyebrow"><span className="pip" /> Portafolio · 2026</p>
 
-        <h1 style={{
-          fontFamily: 'var(--font-display)',
-          fontWeight: 500,
-          fontSize: 'clamp(46px, 6.6vw, 92px)',
-          lineHeight: 0.94,
-          letterSpacing: '-0.025em',
-          margin: 0,
-          width: 'max-content',
-          maxWidth: '150%',
-          position: 'relative',
-          zIndex: 7,
-          color: 'var(--ink)',
-        }}>
-          Josué<br />
-          <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>Hernández</em>
-        </h1>
+        {/* Eyebrow */}
+        <motion.div style={{ x: eyebrowX, y: eyebrowY }}
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+          transition={{ delay: 0.1, duration: 0.6 }}
+        >
+          <p className="eyebrow" style={{ marginBottom: '0.75rem' }}>
+            <span className="pip" /> Portafolio · 2026
+          </p>
+        </motion.div>
 
-        <p style={{ marginTop: 20, fontSize: 18, fontWeight: 600, color: 'var(--ink)' }}>
-          Frontend Developer &amp; Diseñador de interfaces
-        </p>
+        {/* Nombre */}
+        <motion.div style={{ x: nameX, y: nameY }}
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+          transition={{ delay: 0.2, duration: 0.7 }}
+        >
+          <h1 style={{
+            fontFamily: 'var(--font-display)',
+            fontWeight: 700,
+            fontSize: 'clamp(2.5rem, 5.5vw, 5.5rem)',
+            lineHeight: 1,
+            letterSpacing: '-0.03em',
+            margin: 0,
+            color: 'var(--ink)',
+          }}>
+            Josué <span style={{ color: 'var(--accent)' }}>Hernández</span>
+          </h1>
+        </motion.div>
 
-        <p style={{ marginTop: 10, fontSize: 16, lineHeight: 1.55, color: 'var(--ink-2)', maxWidth: '38ch' }}>
-          Construyo experiencias web limpias, rápidas y con carácter —
-          donde el movimiento tiene sentido y cada detalle suma.
-        </p>
+        {/* Rol */}
+        <motion.div style={{ x: roleX, y: roleY }}
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+          transition={{ delay: 0.32, duration: 0.7 }}
+        >
+          <p style={{
+            marginTop: '1rem',
+            fontSize: 'clamp(0.9rem, 1.2vw, 1.1rem)',
+            fontWeight: 600,
+            color: 'var(--ink-2)',
+            letterSpacing: '0.01em',
+          }}>
+            Frontend Developer &amp; Diseñador de interfaces
+          </p>
+        </motion.div>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 26 }}>
-          <a className="chip cv" href="#" download><Icon name="doc" /> Descargar CV</a>
-          <a className="chip" href="https://linkedin.com" target="_blank" rel="noreferrer"><Icon name="linkedin" /> LinkedIn</a>
-          <a className="chip" href="https://github.com" target="_blank" rel="noreferrer"><Icon name="github" /> GitHub</a>
-          <a className="chip" href="mailto:hola@josue.dev"><Icon name="mail" /> Email</a>
-        </div>
+        {/* Descripción */}
+        <motion.div style={{ x: descX, y: descY }}
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+          transition={{ delay: 0.44, duration: 0.7 }}
+        >
+          <p style={{
+            marginTop: '0.5rem',
+            fontSize: 'clamp(0.825rem, 1vw, 0.95rem)',
+            lineHeight: 1.6,
+            color: 'var(--ink-3)',
+            maxWidth: '34ch',
+          }}>
+            Construyo experiencias web limpias, rápidas y con carácter —
+            donde el movimiento tiene sentido y cada detalle suma.
+          </p>
+        </motion.div>
+
+        {/* Chips — todas juntas, wrap natural en sidebar */}
+        <motion.div style={{ x: chipsX, y: chipsY }}
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+          transition={{ delay: 0.56, duration: 0.7 }}
+        >
+          <div style={{
+            display: 'flex', flexWrap: 'nowrap',
+            gap: '0.5rem', marginTop: '1.5rem',
+          }}>
+            <a className="chip" href="https://linkedin.com" target="_blank" rel="noreferrer">
+              <Icon name="linkedin" /> LinkedIn
+            </a>
+            <a className="chip" href="https://github.com" target="_blank" rel="noreferrer">
+              <Icon name="github" /> GitHub
+            </a>
+            <a className="chip" href="mailto:hola@josue.dev">
+              <Icon name="mail" /> Email
+            </a>
+            <a className="chip cv" href="#" download>
+              <Icon name="doc" /> CV
+            </a>
+          </div>
+        </motion.div>
       </div>
 
       {/* ── Scroll cue ── */}
       <motion.div className="scrollcue" style={{
         position: 'absolute',
-        bottom: 'clamp(20px, 4vh, 40px)',
-        left: 'clamp(26px, 3.4vw, 60px)',
+        bottom: 'clamp(1.25rem, 4vh, 2.5rem)',
+        left: 'clamp(1.5rem, 3.4vw, 3.75rem)',
         opacity: scrollCueOpacity,
         zIndex: 6,
       }}>
