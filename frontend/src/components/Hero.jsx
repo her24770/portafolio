@@ -18,8 +18,8 @@ function NavLink({ href, active, children }) {
 
 const NAV_ITEMS = [
   { id: 'about',     label: 'Sobre mí'   },
-  { id: 'proyectos', label: 'Proyectos'  },
   { id: 'stack',     label: 'Stack'      },
+  { id: 'proyectos', label: 'Proyectos'  },
   { id: 'contacto',  label: 'Contacto'   },
 ]
 
@@ -55,7 +55,7 @@ function SideNav({ activeSection }) {
   )
 }
 
-export default function Hero({ progress, activeSection }) {
+export default function Hero({ progress, activeSection, contentScroll }) {
   const mx  = useMotionValue(0)
   const my  = useMotionValue(0)
   const smx = useSpring(mx, { stiffness: 70, damping: 20 })
@@ -170,7 +170,7 @@ export default function Hero({ progress, activeSection }) {
       </motion.div>
 
       {/* ── Identity block ── */}
-      <div style={{
+      <motion.div style={{
         position: 'absolute',
         left: 'clamp(2rem, 4vw, 5rem)',
         top: 'clamp(5rem, 10vh, 8rem)',
@@ -268,7 +268,7 @@ export default function Hero({ progress, activeSection }) {
             </a>
           </div>
         </motion.div>
-      </div>
+      </motion.div>
 
       {/* ── Scroll cue ── */}
       <motion.div className="scrollcue" style={{

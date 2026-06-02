@@ -26,7 +26,7 @@ export default function Projects() {
     >
       <div className="reveal" style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 24, marginBottom: 'clamp(34px, 6vh, 64px)' }}>
         <div>
-          <p className="eyebrow"><span className="pip" /> 01 — Trabajo seleccionado</p>
+          <p className="eyebrow"><span className="pip" /> 03 — Trabajo seleccionado</p>
           <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 'clamp(34px, 4.4vw, 60px)', letterSpacing: '-0.025em', lineHeight: 1, margin: '12px 0 0', color: 'var(--ink)' }}>
             Proyectos<br />destacados
           </h2>

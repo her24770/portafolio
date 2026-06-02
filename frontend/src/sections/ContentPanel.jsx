@@ -39,8 +39,8 @@ export default function ContentPanel({ onSectionChange }) {
   return (
     <div>
       <About />
-      <Projects />
       <Stack />
+      <Projects />
       <Contact />
       <Footer />
     </div>

@@ -7,7 +7,7 @@ export default function About() {
       style={{ padding: 'clamp(40px, 8vh, 96px) clamp(30px, 5vw, 90px)', maxWidth: 1080 }}
     >
       <div className="reveal" style={{ marginBottom: 'clamp(34px, 6vh, 64px)' }}>
-        <p className="eyebrow"><span className="pip" /> 03 — Quién soy</p>
+        <p className="eyebrow"><span className="pip" /> 01 — Quién soy</p>
         <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 'clamp(34px, 4.4vw, 60px)', letterSpacing: '-0.025em', lineHeight: 1, margin: '12px 0 0', color: 'var(--ink)' }}>
           Sobre mí
         </h2>
