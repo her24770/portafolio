@@ -32,7 +32,7 @@ export default function Contact() {
     <section
       id="contacto"
       style={{
-        background: 'var(--ink)', color: '#fff',
+        background: 'var(--section-dark)', color: '#fff',
         padding: 'clamp(56px, 11vh, 120px) clamp(30px, 5vw, 90px)',
       }}
     >

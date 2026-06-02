@@ -55,7 +55,7 @@ function SideNav({ activeSection }) {
   )
 }
 
-export default function Hero({ progress, activeSection, contentScroll }) {
+export default function Hero({ progress, activeSection, contentScroll, theme, onThemeToggle }) {
   const mx  = useMotionValue(0)
   const my  = useMotionValue(0)
   const smx = useSpring(mx, { stiffness: 70, damping: 20 })
@@ -114,6 +114,18 @@ export default function Hero({ progress, activeSection, contentScroll }) {
         <NavLink href="#home" active>Home</NavLink>
         <NavLink href="#proyectos">Proyectos</NavLink>
         <NavLink href="#about">About</NavLink>
+        <button onClick={onThemeToggle} style={{
+          marginLeft: 'auto', background: 'none', border: 'none',
+          cursor: 'pointer', padding: '0.375rem',
+          color: 'var(--ink-3)', display: 'flex', alignItems: 'center',
+          borderRadius: '0.5rem',
+          transition: 'color .25s ease',
+        }}
+          onMouseEnter={e => e.currentTarget.style.color = 'var(--ink)'}
+          onMouseLeave={e => e.currentTarget.style.color = 'var(--ink-3)'}
+        >
+          <Icon name={theme === 'dark' ? 'sun' : 'moon'} width={17} height={17} />
+        </button>
       </nav>
 
       {/* ── Stage: foto + cards flotantes ── */}

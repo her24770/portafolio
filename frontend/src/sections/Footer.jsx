@@ -3,7 +3,7 @@ import Icon from '../components/Icon'
 export default function Footer() {
   return (
     <footer style={{
-      background: 'var(--ink)', color: 'rgba(255,255,255,0.5)',
+      background: 'var(--section-dark)', color: 'rgba(255,255,255,0.5)',
       borderTop: '1px solid rgba(255,255,255,0.1)',
     }}>
       <div style={{

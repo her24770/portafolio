@@ -6,6 +6,8 @@ export default function Icon({ name, width = 18, height = 18, ...props }) {
     doc:      <g fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2.5h7l5 5v14a0 0 0 0 1 0 0H6a0 0 0 0 1 0 0z"/><path d="M13 2.5V8h5"/><path d="M9 13h6M9 17h6"/></g>,
     arrow:    <g fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12h15"/><path d="m13 6 6 6-6 6"/></g>,
     arrowup:  <g fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 19V4"/><path d="m6 11 6-6 6 6"/></g>,
+    moon:     <g fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></g>,
+    sun:      <g fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></g>,
   }
   return (
     <svg viewBox="0 0 24 24" width={width} height={height} aria-hidden="true" {...props}>
