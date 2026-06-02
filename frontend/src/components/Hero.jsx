@@ -55,7 +55,80 @@ function SideNav({ activeSection }) {
   )
 }
 
-export default function Hero({ progress, activeSection, contentScroll, theme, onThemeToggle }) {
+function MobileHero({ theme, onThemeToggle }) {
+  return (
+    <div style={{
+      minHeight: '100svh', display: 'flex', flexDirection: 'column',
+      padding: 'clamp(1.25rem, 3vh, 2rem) clamp(1.25rem, 5vw, 1.75rem)',
+      background: 'var(--bg)', position: 'relative', overflow: 'hidden',
+    }}>
+      <nav style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', marginBottom: 'auto' }}>
+        <NavLink href="#home" active>Home</NavLink>
+        <NavLink href="#stack">Stack</NavLink>
+        <NavLink href="#proyectos">Proyectos</NavLink>
+        <button onClick={onThemeToggle} style={{
+          marginLeft: 'auto', background: 'none', border: 'none',
+          cursor: 'pointer', padding: '0.375rem', color: 'var(--ink-3)',
+          display: 'flex', alignItems: 'center', borderRadius: '0.5rem',
+        }}>
+          <Icon name={theme === 'dark' ? 'sun' : 'moon'} width={17} height={17} />
+        </button>
+      </nav>
+
+      {/* Foto — derecha, anclada abajo */}
+      <img
+        src={PHOTO} alt="Josué Hernández"
+        style={{
+          position: 'absolute', right: 0, bottom: 0,
+          height: '72%', width: 'auto',
+          objectFit: 'contain', objectPosition: 'bottom center',
+          filter: 'drop-shadow(0 1.5rem 2.5rem rgba(27,26,21,0.15))',
+          pointerEvents: 'none', zIndex: 0,
+        }}
+      />
+
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '0.75rem', paddingTop: '2rem', position: 'relative', zIndex: 1, maxWidth: '62%' }}>
+        <p className="eyebrow" style={{ margin: 0 }}>
+          <span className="pip" /> Portafolio · 2026
+        </p>
+        <h1 style={{
+          fontFamily: 'var(--font-display)', fontWeight: 700,
+          fontSize: 'clamp(2.5rem, 11vw, 4rem)',
+          lineHeight: 1, letterSpacing: '-0.03em', margin: 0, color: 'var(--ink)',
+        }}>
+          Josué <span style={{ color: 'var(--accent)' }}>Hernández</span>
+        </h1>
+        <p style={{ fontSize: 'clamp(0.8rem, 3vw, 1rem)', fontWeight: 600, color: 'var(--ink-2)', margin: 0 }}>
+          Frontend Developer &amp; Diseñador de interfaces
+        </p>
+        <p style={{ fontSize: 'clamp(0.75rem, 2.8vw, 0.9rem)', lineHeight: 1.6, color: 'var(--ink-3)', margin: 0 }}>
+          Construyo experiencias web limpias, rápidas y con carácter.
+        </p>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginTop: '0.25rem' }}>
+          <a className="chip" href="https://linkedin.com" target="_blank" rel="noreferrer">
+            <Icon name="linkedin" /> LinkedIn
+          </a>
+          <a className="chip" href="https://github.com" target="_blank" rel="noreferrer">
+            <Icon name="github" /> GitHub
+          </a>
+          <a className="chip" href="mailto:hola@josue.dev">
+            <Icon name="mail" /> Email
+          </a>
+          <a className="chip cv" href="#" download>
+            <Icon name="doc" /> CV
+          </a>
+        </div>
+      </div>
+
+      <div className="scrollcue" style={{ paddingTop: '2rem' }}>
+        <span className="mouse" /> Desliza para explorar
+      </div>
+    </div>
+  )
+}
+
+export default function Hero({ progress, activeSection, contentScroll, theme, onThemeToggle, isMobile }) {
+  if (isMobile) return <MobileHero theme={theme} onThemeToggle={onThemeToggle} />
   const mx  = useMotionValue(0)
   const my  = useMotionValue(0)
   const smx = useSpring(mx, { stiffness: 70, damping: 20 })

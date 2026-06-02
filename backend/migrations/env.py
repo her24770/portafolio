@@ -4,7 +4,7 @@ from sqlalchemy import engine_from_config, pool
 from alembic import context
 
 from app.database import Base
-from app.models import project, contact_message  # noqa: F401 — imports needed for metadata
+from app.models import project, contact_message, technology  # noqa: F401 — imports needed for metadata
 
 config = context.config
 

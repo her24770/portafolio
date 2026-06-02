@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Icon from '../components/Icon'
+import { useIsMobile } from '../hooks/useIsMobile'
 
 const SOCIALS = [
   { icon: 'linkedin', label: 'LinkedIn',      href: 'https://linkedin.com' },
@@ -9,6 +10,7 @@ const SOCIALS = [
 ]
 
 export default function Contact() {
+  const isMobile = useIsMobile()
   const [form, setForm]   = useState({ nombre: '', email: '', mensaje: '' })
   const [errors, setErrors] = useState({})
   const [sent, setSent]   = useState(false)
@@ -39,8 +41,8 @@ export default function Contact() {
       <div style={{
         maxWidth: 1080,
         display: 'grid',
-        gridTemplateColumns: '1.05fr 1fr',
-        gap: 'clamp(40px, 6vw, 90px)',
+        gridTemplateColumns: isMobile ? '1fr' : '1.05fr 1fr',
+        gap: 'clamp(32px, 6vw, 90px)',
         alignItems: 'start',
       }}>
         <div className="reveal">

@@ -307,3 +307,25 @@ button { font-family: inherit; cursor: pointer; }
   * { animation-duration: .001ms !important; transition-duration: .12s !important; }
   html { scroll-behavior: auto; }
 }
+
+/* ── mobile ── */
+@media (max-width: 767px) {
+  body { font-size: 15px; }
+
+  .eyebrow { font-size: 11px; }
+
+  .stk { font-size: 13px; padding: 9px 14px; }
+
+  .btn { font-size: 13px; padding: 10px 16px; }
+
+  .ptitle { font-size: 20px; }
+
+  .chip { font-size: 12px; padding: 7px 12px 7px 10px; }
+
+  .fcard { padding: 12px 14px; }
+
+  .pcard { border-radius: 14px; padding: 18px 18px 16px; }
+
+  .form { gap: 12px; }
+  .field input, .field textarea { font-size: 14px; padding: 11px 13px; }
+}

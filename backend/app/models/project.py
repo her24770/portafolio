@@ -2,6 +2,7 @@ import uuid
 from sqlalchemy import Column, String, Text, Boolean, Integer, TIMESTAMP
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.sql import func
+from sqlalchemy.orm import relationship
 from app.database import Base
 
 
@@ -15,11 +16,22 @@ class Project(Base):
     content = Column(Text, nullable=True)
     thumbnail_url = Column(String, nullable=True)
     images = Column(JSONB, default=list, server_default="[]")
-    tech_stack = Column(JSONB, default=list, server_default="[]")
     category = Column(String, nullable=True)
     demo_url = Column(String, nullable=True)
-    repo_url = Column(String, nullable=True)
+    repo_urls = Column(JSONB, default=list, server_default="[]")
     featured = Column(Boolean, default=False, server_default="false")
     order = Column(Integer, default=0, server_default="0")
     status = Column(String, default="completed", server_default="completed")
+    year = Column(Integer, nullable=True)
+    problem_solved = Column(Text, nullable=True)
+    architecture = Column(Text, nullable=True)
+    challenges = Column(Text, nullable=True)
+    what_i_learned = Column(Text, nullable=True)
+    would_do_different = Column(Text, nullable=True)
+    setup_instructions = Column(Text, nullable=True)
+    team_size = Column(Integer, nullable=True)
+    team_description = Column(Text, nullable=True)
+    role = Column(String, nullable=True)
     created_at = Column(TIMESTAMP, server_default=func.now())
+
+    technologies = relationship("Technology", secondary="project_technologies", lazy="joined")
