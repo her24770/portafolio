@@ -377,6 +377,36 @@ PROJECTS = [
         },
     },
 
+    {
+        "title": "Portafolio",
+        "slug": "portafolio",
+        "description": "Mi portafolio personal: sitio web con diseño propio, backend en FastAPI y contenido administrado desde base de datos para mostrar proyectos, stack y formas de contacto.",
+        "content": "Este sitio es mi portafolio personal, construido desde cero con diseño propio y un backend real. El frontend está hecho en React con Tailwind CSS y Framer Motion para animaciones, y organiza el contenido en secciones: hero, proyectos destacados, stack tecnológico, sobre mí y contacto. El backend en FastAPI expone los endpoints que alimentan la interfaz: proyectos con filtros, tecnologías del stack personal, carga de archivos a Cloudflare R2 y formulario de contacto. Todo corre en un VPS con Docker, Nginx como proxy reverso y certificados SSL de Cloudflare.",
+        "thumbnail_url": "proyectos/portafolio/portafolio_principal.png",
+        "images": [ "proyectos/portafolio/portafolio_1.png","proyectos/portafolio/portafolio_2.png","proyectos/portafolio/portafolio_3.png"],
+        "video_url": "proyectos/portafolio/portafolio_video.webm",
+        "category": "fullstack",
+        "demo_url": "https://jhgo.online",
+        "repo_urls": ["https://github.com/her24770/portafolio"],
+        "featured": False,
+        "order": 10,
+        "status": "in_progress",
+        "year": 2026,
+        "problem_solved": "Necesitaba un lugar propio donde mostrar mi trabajo, stack y disponibilidad sin depender de plantillas genéricas.",
+        "architecture": "Separé el proyecto en frontend y backend dentro del mismo repositorio con Docker Compose. El frontend usa React con Vite, Tailwind CSS v4 y Framer Motion, y consume los endpoints del backend via variable de entorno bakeada en build time. El backend es una API FastAPI con SQLAlchemy, Alembic para migraciones y PostgreSQL. Los assets se sirven desde Cloudflare R2 con rutas relativas en base de datos y URL base prepended en el response. Nginx en el VPS hace proxy a cada contenedor por puerto interno sin exponer nada directamente al público.",
+        "challenges": "Lo más interesante fue diseñar el sistema de contenido: los proyectos y tecnologías no son hardcoded, viven en PostgreSQL y el frontend los consume dinámicamente. También fue relevante resolver el timing del IntersectionObserver con datos async: los elementos con clase .reveal arrancaban ocultos antes de que llegara la data, así que tuve que crear un observer secundario que se dispara cuando cambia el estado de proyectos. El seed de migraciones también requirió atención porque SQLAlchemy en text() no acepta la sintaxis ::jsonb de PostgreSQL.",
+        "what_i_learned": "Aprendí a diseñar un sitio personal con criterio propio sin usar plantillas, a manejar assets remotos con Cloudflare R2, y a pensar mejor en cómo separar contenido de presentación usando un backend propio en lugar de JSON estático. También consolidé Docker Compose con múltiples servicios y Nginx como capa de proxy.",
+        "would_do_different": "Agregaría un panel de administración para editar proyectos sin tocar el seed directamente, y movería el contenido de las secciones estáticas (about, stack) también a base de datos para poder actualizarlo sin rebuild.",
+        "setup_instructions": "Requisitos previos: Docker y Docker Compose.\n\n1. git clone https://github.com/her24770/portafolio && cd portafolio\n2. cp .env.example .env\n3. Configurar variables: POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, VITE_API_URL, R2_BUCKET, R2_ENDPOINT, R2_ACCESS_KEY, R2_SECRET_KEY, R2_PUBLIC_URL\n4. docker compose up --build\n5. Frontend en http://localhost:5173 y API en http://localhost:8000",
+        "team_size": 1,
+        "team_description": None,
+        "role": "Full-stack & diseño",
+        "technologies": {
+            "primary": ["React", "Python", "FastAPI", "PostgreSQL", "Docker"],
+            "secondary": ["Tailwind CSS", "Framer Motion", "Vite", "SQLAlchemy", "Alembic", "Cloudflare R2"],
+        },
+    },
+
     # ── Agrega más proyectos aquí siguiendo el mismo formato ─────────────────
 ]
 
