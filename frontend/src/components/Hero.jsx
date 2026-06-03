@@ -178,7 +178,7 @@ export default function Hero({ progress, activeSection, contentScroll, isMobile 
         <motion.img
           src={PHOTO} alt="Josué Hernández"
           style={{
-            position: 'absolute', right: '2vw', bottom: 0,
+            position: 'absolute', right: '12vw', bottom: 0,
             height: '86%', width: 'auto',
             objectFit: 'contain', objectPosition: 'bottom center',
             filter: 'drop-shadow(0 2.5rem 3.75rem rgba(27,26,21,0.18))',
@@ -254,7 +254,7 @@ export default function Hero({ progress, activeSection, contentScroll, isMobile 
             margin: 0,
             color: 'var(--ink)',
           }}>
-            Josué <span style={{ color: 'var(--accent)' }}>Hernández</span>
+            Josue <span style={{ color: 'var(--accent)' }}>Hernández</span>
           </h1>
         </motion.div>
 

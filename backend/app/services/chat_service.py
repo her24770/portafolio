@@ -7,18 +7,44 @@ from app.config import get_settings
 from app.services.project_service import get_all_projects, get_project_by_slug
 
 settings = get_settings()
-ABOUT_ME_PATH = Path(__file__).parent.parent.parent / "about-me.md"
+ABOUT_DIR = Path(__file__).parent.parent.parent / "about"
 MODEL = "claude-sonnet-4-6"
 
 TOOLS = [
     {
+        "name": "get_bio",
+        "description": "Obtiene la presentación personal del desarrollador: nombre, rol, ubicación, disponibilidad y contacto",
+        "input_schema": {"type": "object", "properties": {}, "required": []},
+    },
+    {
+        "name": "get_skills",
+        "description": "Obtiene información sobre el perfil técnico del desarrollador, sus áreas de fortaleza y cómo trabaja",
+        "input_schema": {"type": "object", "properties": {}, "required": []},
+    },
+    {
+        "name": "get_experience",
+        "description": "Obtiene la experiencia laboral del desarrollador: empresas, roles y responsabilidades",
+        "input_schema": {"type": "object", "properties": {}, "required": []},
+    },
+    {
+        "name": "get_education",
+        "description": "Obtiene la formación académica del desarrollador: universidad, carrera y certificaciones",
+        "input_schema": {"type": "object", "properties": {}, "required": []},
+    },
+    {
+        "name": "get_services",
+        "description": "Obtiene los servicios freelance que ofrece el desarrollador y cómo contratarlo",
+        "input_schema": {"type": "object", "properties": {}, "required": []},
+    },
+    {
+        "name": "get_values",
+        "description": "Obtiene los valores, forma de trabajar y qué motiva al desarrollador",
+        "input_schema": {"type": "object", "properties": {}, "required": []},
+    },
+    {
         "name": "get_all_projects",
         "description": "Obtiene la lista completa de proyectos del portafolio",
-        "input_schema": {
-            "type": "object",
-            "properties": {},
-            "required": [],
-        },
+        "input_schema": {"type": "object", "properties": {}, "required": []},
     },
     {
         "name": "get_project_by_slug",
@@ -28,27 +54,28 @@ TOOLS = [
             "properties": {
                 "slug": {
                     "type": "string",
-                    "description": "El slug único del proyecto, ej: 'uvghelp'",
+                    "description": "El slug único del proyecto, ej: 'uvg-help'",
                 }
             },
             "required": ["slug"],
         },
     },
-    {
-        "name": "get_contact_info",
-        "description": "Obtiene la información de contacto del desarrollador (email, LinkedIn, GitHub)",
-        "input_schema": {
-            "type": "object",
-            "properties": {},
-            "required": [],
-        },
-    },
 ]
 
+FILE_MAP = {
+    "get_bio": "bio.md",
+    "get_skills": "skills.md",
+    "get_experience": "experience.md",
+    "get_education": "education.md",
+    "get_services": "services.md",
+    "get_values": "values.md",
+}
 
-def _read_about_me() -> str:
-    if ABOUT_ME_PATH.exists():
-        return ABOUT_ME_PATH.read_text(encoding="utf-8")
+
+def _read_about(filename: str) -> str:
+    path = ABOUT_DIR / filename
+    if path.exists():
+        return path.read_text(encoding="utf-8")
     return ""
 
 
@@ -63,6 +90,7 @@ def _projects_to_summary(projects) -> list[dict]:
             "category": p.category,
             "demo_url": p.demo_url,
             "status": p.status,
+            "year": p.year,
         }
         for p in projects
     ]
@@ -83,10 +111,22 @@ def _project_to_detail(project) -> dict:
         "repo_urls": project.repo_urls,
         "featured": project.featured,
         "status": project.status,
+        "year": project.year,
+        "problem_solved": project.problem_solved,
+        "architecture": project.architecture,
+        "challenges": project.challenges,
+        "what_i_learned": project.what_i_learned,
+        "would_do_different": project.would_do_different,
+        "role": project.role,
+        "team_size": project.team_size,
+        "team_description": project.team_description,
     }
 
 
-def _handle_tool(db: Session, tool_name: str, tool_input: dict, about_me: str) -> dict:
+def _handle_tool(db: Session, tool_name: str, tool_input: dict) -> dict:
+    if tool_name in FILE_MAP:
+        return {"content": _read_about(FILE_MAP[tool_name])}
+
     if tool_name == "get_all_projects":
         return {"projects": _projects_to_summary(get_all_projects(db))}
 
@@ -97,25 +137,19 @@ def _handle_tool(db: Session, tool_name: str, tool_input: dict, about_me: str) -
             return {"error": f"Proyecto con slug '{slug}' no encontrado"}
         return _project_to_detail(project)
 
-    if tool_name == "get_contact_info":
-        return {"about_me": about_me}
-
     return {"error": f"Herramienta '{tool_name}' no reconocida"}
 
 
 def process_chat(db: Session, user_message: str) -> str:
-    about_me = _read_about_me()
     projects = get_all_projects(db)
 
-    system_prompt = f"""Eres un asistente del portafolio personal de un desarrollador full-stack. Responde de forma amigable y profesional.
+    system_prompt = f"""Eres un asistente del portafolio personal de un desarrollador. Responde de forma amigable y profesional.
 
-Información del desarrollador:
-{about_me}
+Tienes herramientas para obtener información detallada sobre el desarrollador y sus proyectos. Úsalas según lo que pregunte el usuario — no cargues información que no sea necesaria.
 
-Proyectos (resumen):
+Proyectos disponibles (resumen):
 {json.dumps(_projects_to_summary(projects), ensure_ascii=False, indent=2)}
 
-Usa las herramientas disponibles cuando necesites información más detallada.
 Responde siempre en el idioma en que te hablen."""
 
     client = anthropic.Anthropic(api_key=settings.anthropic_api_key)
@@ -145,7 +179,7 @@ Responde siempre en el idioma en que te hablen."""
         for block in response.content:
             if block.type != "tool_use":
                 continue
-            result = _handle_tool(db, block.name, block.input, about_me)
+            result = _handle_tool(db, block.name, block.input)
             tool_results.append({
                 "type": "tool_result",
                 "tool_use_id": block.id,
