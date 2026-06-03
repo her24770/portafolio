@@ -7,8 +7,14 @@ from app.services import chat_service
 router = APIRouter(prefix="/api/chat", tags=["chat"])
 
 
+class HistoryMessage(BaseModel):
+    role: str
+    text: str
+
+
 class ChatRequest(BaseModel):
     message: str
+    history: list[HistoryMessage] = []
 
 
 @router.post("")
@@ -22,5 +28,6 @@ def chat(request: ChatRequest, db: Session = Depends(get_db)):
                 "message": "El mensaje no puede estar vacío",
             },
         )
-    response = chat_service.process_chat(db, request.message)
+    history = [{"role": m.role, "text": m.text} for m in request.history]
+    response = chat_service.process_chat(db, request.message, history)
     return {"response": response}

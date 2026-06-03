@@ -164,12 +164,12 @@ def _handle_tool(db: Session, tool_name: str, tool_input: dict) -> dict:
     return {"error": f"Herramienta '{tool_name}' no reconocida"}
 
 
-def process_chat(db: Session, user_message: str) -> str:
+def process_chat(db: Session, user_message: str, history: list[dict] = []) -> str:
     projects = get_all_projects(db)
 
-    system_prompt = f"""Eres un asistente del portafolio personal de un desarrollador. Responde de forma amigable y profesional.
+    system_prompt = f"""Eres Sky, un asistente virtual del portafolio de Josue Hernández, desarrollador fullstack guatemalteco. Responde de forma directa y profesional, sin ser excesivamente formal.
 
-Tienes herramientas para obtener información detallada sobre el desarrollador y sus proyectos. Úsalas según lo que pregunte el usuario — no cargues información que no sea necesaria.
+Tienes herramientas para obtener información detallada sobre Josue y sus proyectos. Úsalas según lo que pregunte el usuario — no cargues información que no sea necesaria.
 
 Proyectos disponibles (resumen):
 {json.dumps(_projects_to_summary(projects), ensure_ascii=False, indent=2)}
@@ -177,8 +177,15 @@ Proyectos disponibles (resumen):
 Responde siempre en el idioma en que te hablen."""
 
     client = OpenAI(api_key=settings.openai_api_key)
+
+    prior = []
+    for msg in history:
+        role = "assistant" if msg.get("role") == "ai" else "user"
+        prior.append({"role": role, "content": msg.get("text", "")})
+
     messages = [
         {"role": "system", "content": system_prompt},
+        *prior,
         {"role": "user", "content": user_message},
     ]
 

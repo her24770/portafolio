@@ -35,3 +35,13 @@ export async function fetchProject(slug) {
 export async function fetchStack() {
   return get('/api/technologies/stack')
 }
+
+export async function sendChat(message, history = []) {
+  const res = await fetch(`${BASE}/api/chat`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message, history }),
+  })
+  if (!res.ok) throw new Error(`Chat API ${res.status}`)
+  return res.json()
+}

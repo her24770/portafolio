@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { sendChat } from '../services/api'
 
 const WELCOME = {
   id: 0,
@@ -48,20 +49,26 @@ export default function ChatWidget() {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, typing])
 
-  const send = () => {
+  const send = async () => {
     const text = input.trim()
     if (!text) return
     setInput('')
-    setMessages(m => [...m, { id: Date.now(), role: 'user', text }])
+    const userMsg = { id: Date.now(), role: 'user', text }
+    setMessages(m => [...m, userMsg])
     setTyping(true)
-    setTimeout(() => {
-      setTyping(false)
+    try {
+      const history = messages.filter(m => m.id !== 0)
+      const data = await sendChat(text, history)
+      setMessages(m => [...m, { id: Date.now() + 1, role: 'ai', text: data.response }])
+    } catch {
       setMessages(m => [...m, {
         id: Date.now() + 1,
         role: 'ai',
-        text: 'Gracias por tu mensaje. Pronto me pondré en contacto contigo.',
+        text: 'Hubo un error al conectar con el servidor. Intenta de nuevo.',
       }])
-    }, 1400)
+    } finally {
+      setTyping(false)
+    }
   }
 
   return (

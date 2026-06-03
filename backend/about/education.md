@@ -2,32 +2,23 @@
 
 ## Educación formal
 
-**Universidad:** [nombre de la universidad]
-**Carrera:** [nombre de la carrera]
-**Estado:** [graduado en año / en curso, X semestre]
-
-[Algo adicional sobre tu formación si aplica: énfasis, tesis, proyectos académicos relevantes,
-logros dentro de la universidad.]
+### Universidad del Valle de Guatemala (UVG)
+**Carrera:** Licenciatura en Ingeniería en Computación y Tecnologías de la Información
+**Estado:** En curso — 5.° semestre
+**Promedio:** 94 · Distinción Cum Laude
+**Beca:** Becario completo de la Fundación Juan Bautista Gutiérrez (FJBG), otorgada por rendimiento académico y potencial profesional.
 
 ---
 
-## Cursos y certificaciones
+### Centro Educativo Kinal
+**Título:** Perito en Informática
+**Período:** 2021 — 2023
+**Promedio:** 95 · Estudiante distinguido
 
-### [Nombre del curso o certificación]
-**Plataforma / Institución:** [Udemy / Coursera / AWS / etc.]
-**Año:** [año]
-[Una línea de qué cubrió y por qué lo tomaste.]
-
-### [Nombre del curso o certificación]
-**Plataforma / Institución:** [...]
-**Año:** [año]
-[Una línea de qué cubrió.]
-
-<!-- Agrega solo los que consideres relevantes o que realmente completaste -->
+Base técnica real en programación antes de entrar a la universidad. El perito en informática en Kinal es donde realmente empezó el trabajo con código — no fue un curso introductorio sino formación técnica concreta.
 
 ---
 
 ## Aprendizaje autodidacta
 
-[Cómo aprendes por tu cuenta: documentación oficial, proyectos personales, comunidades,
-libros técnicos, etc. Esto muestra tu mentalidad de crecimiento continuo.]
+La mayor parte del conocimiento práctico viene de construir proyectos reales. Once proyectos en cinco años, cada uno con un problema concreto que resolver. Cuando algo no lo sabe, parte de la documentación oficial, no de tutoriales. Los proyectos son el método de aprendizaje principal — no los cursos.
