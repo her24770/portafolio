@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import Icon from './Icon'
 
@@ -19,7 +20,7 @@ export default function CVModal({ open, onClose }) {
     return () => window.removeEventListener('keydown', handler)
   }, [open, onClose])
 
-  return (
+  return createPortal(
     <AnimatePresence>
       {open && (
         <>
@@ -68,6 +69,7 @@ export default function CVModal({ open, onClose }) {
           </motion.div>
         </>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   )
 }

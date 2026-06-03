@@ -5,14 +5,25 @@ const EDUCATION = [
     period: '2024 — Hoy',
     title: 'Lic. Ingeniería en CC y TI',
     institution: 'Universidad del Valle de Guatemala',
-    desc: '5.° Semestre · Cum Laude · Promedio 94 · Becario Fundación Juan Bautista Gutiérrez.',
+    desc: '5.° Semestre · Cum Laude · Promedio 94.',
+    logo: '/assets/logo_uvg.png',
+    current: true,
+  },
+  {
+    period: '2024 — Hoy',
+    title: 'Becario',
+    institution: 'Fundación Juan Bautista Gutiérrez',
+    desc: 'Beca completa para estudios universitarios en UVG. Reconocimiento al rendimiento académico y potencial profesional.',
+    logo: '/assets/logo_fjbg.png',
     current: true,
   },
   {
     period: '2021 — 2023',
-    title: 'Perito en Computación',
+    title: 'Perito en Informática',
     institution: 'Centro Educativo Kinal',
     desc: 'Estudiante distinguido · Promedio 95.',
+    logo: '/assets/logo_kinal.png',
+    current: false,
   },
 ]
 
@@ -36,13 +47,23 @@ export default function Formacion() {
       </motion.h2>
 
       <div className="ab-timeline">
-        {EDUCATION.map(({ period, title, institution, desc, current }, i) => (
+        {EDUCATION.map(({ period, title, institution, desc, logo, current }, i) => (
           <motion.div key={title} className="ab-tl-item"
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={vp} transition={{ duration: 0.65, ease, delay: i * 0.1 }}
           >
-            <span className={'ab-tl-period' + (current ? ' current' : '')}>{period}</span>
+            {/* Columna izquierda: año + logo */}
+            <div className="ab-tl-period-col">
+              <span className={'ab-tl-period' + (current ? ' current' : '')}>{period}</span>
+              {logo && (
+                <div className="ab-tl-logo">
+                  <img src={logo} alt={institution} />
+                </div>
+              )}
+            </div>
+
             <div className={'ab-tl-dot' + (current ? ' current' : '')} />
+
             <div>
               <p className="ab-tl-title">{title}</p>
               <p className="ab-tl-company">{institution}</p>

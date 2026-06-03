@@ -4,26 +4,44 @@ import { fetchStack } from '../../../services/api'
 
 const STRENGTHS = [
   {
-    title: 'Lógica Estructural',
-    desc: 'Pensamiento lógico y resolución de problemas como base de cada solución. Planificación cuidadosa antes de escribir una sola línea.',
+    title: 'Diseño desde los datos',
+    desc: 'Antes de escribir código, modela entidades, relaciones y límites del sistema. Eso define la arquitectura, no al revés. Algunos proyectos usan grafos, otros roles reales de PostgreSQL, otros Redis para estado efímero — según lo que el dominio pide.',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M9 18h6M10 22h4M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z"/>
+        <ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/>
       </svg>
     ),
   },
   {
-    title: 'Aprendizaje Ágil',
-    desc: 'Abierto a aprender nuevas tecnologías según las necesidades del proyecto o el equipo, adaptándome con rapidez al contexto.',
+    title: 'Proyectos que se usan',
+    desc: 'Varios proyectos están en producción con usuarios reales: estudiantes que gestionan sus horas de beca, administradores que mantienen datos universitarios, una comunidad que reporta emergencias. No solo demos de portafolio.',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
       </svg>
     ),
   },
   {
-    title: 'Trabajo en Equipo',
-    desc: 'Experiencia en equipos técnicos con metodologías Scrum y trabajo colaborativo orientado a resultados concretos.',
+    title: 'Criterio sobre herramientas',
+    desc: 'No fuerza un stack conocido en cada problema. Usa Neo4j cuando el dominio es un grafo, lleva seguridad al nivel de base de datos cuando la lógica lo exige, separa memoria persistente de memoria activa cuando la IA lo necesita.',
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+      </svg>
+    ),
+  },
+  {
+    title: 'IA con memoria y contexto',
+    desc: 'No usa la IA como decoración. En SKY Chat diseñó un system prompt dinámico con personalidad, roles y perfil relacional entre usuarios. En SalesAI implementó compresión de historial para mantener contexto sin disparar el costo de tokens.',
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 2a8 8 0 0 1 8 8c0 5-8 12-8 12S4 15 4 10a8 8 0 0 1 8-8z"/><circle cx="12" cy="10" r="3"/>
+      </svg>
+    ),
+  },
+  {
+    title: 'Equipo y trabajo autónomo',
+    desc: 'SWAP fue un proyecto de equipo de seis personas con metodología Scrum en Ingeniería de Software. El resto de proyectos los construyó solo, desde el modelo de datos hasta el despliegue. Funciona bien en ambos modos.',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>

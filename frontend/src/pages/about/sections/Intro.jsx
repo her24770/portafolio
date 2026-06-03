@@ -20,20 +20,31 @@ export default function Intro() {
             initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={vp} transition={{ duration: 0.75, ease, delay: 0.06 }}
           >
-            Enfocado en construir sistemas{' '}
-            <em>sólidos, funcionales y bien estructurados</em>.
+            Desde 2021 convirtiendo problemas reales{' '}
+            <em>en software que la gente usa</em>.
           </motion.h2>
 
           <motion.p className="ab-bio"
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={vp} transition={{ duration: 0.75, ease, delay: 0.14 }}
           >
-            Estudiante de Ingeniería en Ciencias de la Computación con
-            experiencia en desarrollo Full Stack. Me especializo en bases de
-            datos, diseño estructural y sistemas funcionales. Abierto a aprender
-            nuevas tecnologías según las necesidades del proyecto. Busco
-            oportunidades de medio tiempo o freelance mientras continúo mis
-            estudios.
+            Empecé con informática en el colegio, donde entendí que los
+            computadores son herramientas, no magia. Desde 2021 estudio
+            Ingeniería en Computación y Tecnologías de la Información en la UVG,
+            y convertí ese interés en algo más concreto: sistemas con lógica
+            real, bases de datos con estructura pensada y código que funciona
+            más allá de la entrega académica.
+          </motion.p>
+
+          <motion.p className="ab-bio"
+            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={vp} transition={{ duration: 0.75, ease, delay: 0.2 }}
+            style={{ marginTop: '1rem' }}
+          >
+            Me importa entender el problema antes de elegir la tecnología. Por
+            eso algunos proyectos usan grafos, otros llevan los permisos hasta
+            el nivel de PostgreSQL, y alguno tiene una IA que recuerda el
+            contexto de una conversación en lugar de responder siempre igual.
           </motion.p>
         </div>
 

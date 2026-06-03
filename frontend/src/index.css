@@ -1045,6 +1045,15 @@ button { font-family: inherit; cursor: pointer; }
   box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent) 18%, transparent);
 }
 
+.ab-tl-period-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+  padding-right: 0.875rem;
+  padding-top: 2px;
+}
+
 .ab-tl-period {
   font-size: 11px;
   font-weight: 600;
@@ -1052,8 +1061,26 @@ button { font-family: inherit; cursor: pointer; }
   letter-spacing: 0.04em;
   line-height: 1.5;
   text-align: right;
-  padding-top: 2px;
   margin: 0;
+}
+
+.ab-tl-logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.07);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.ab-tl-logo img {
+  width: 72%;
+  height: 72%;
+  object-fit: contain;
+  display: block;
 }
 
 .ab-tl-period.current { color: var(--accent); font-weight: 700; }
@@ -1072,6 +1099,14 @@ button { font-family: inherit; cursor: pointer; }
   color: var(--ink-2);
   margin: 3px 0 0;
 }
+.ab-tl-company-link {
+  color: var(--ink-2);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.ab-tl-company-link:hover { color: var(--accent); border-color: var(--accent); }
+.ab-tl-company-detail { color: var(--ink-3); font-weight: 500; }
 
 .ab-tl-desc {
   font-size: 12.5px;
@@ -1079,6 +1114,23 @@ button { font-family: inherit; cursor: pointer; }
   line-height: 1.65;
   margin: 0.5rem 0 0;
   font-style: italic;
+}
+
+.ab-tl-techs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 0.75rem;
+}
+.ab-tl-tech {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--line-2);
+  color: var(--ink-3);
+  border: 1px solid var(--line);
 }
 
 /* About responsive */

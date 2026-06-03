@@ -19,45 +19,45 @@ depends_on: Union[str, Sequence[str], None] = None
 # level: "Avanzado" | "Intermedio" | "Básico"
 TECHNOLOGIES = [
     # Lenguajes
-    ("Java",           "java",           "language", True,  "Intermedio"),
-    ("JavaScript",     "javascript",     "language", True,  "Avanzado"),
-    ("TypeScript",     "typescript",     "language", True,  "Intermedio"),
-    ("Python",         "python",         "language", True,  "Avanzado"),
+    ("Java",           "java",           "language", True,  "Intermedio"),  # 1 proyecto primario (Entérate)
+    ("JavaScript",     "javascript",     "language", True,  "Avanzado"),    # base de todo el trabajo frontend/Node
+    ("TypeScript",     "typescript",     "language", True,  "Avanzado"),    # primario en 3 proyectos complejos
+    ("Python",         "python",         "language", True,  "Avanzado"),    # primario en 6 proyectos
     ("Go",             "go",             "language", False, "Básico"),
     ("Rust",           "rust",           "language", False, "Básico"),
     ("PHP",            "php",            "language", False, "Básico"),
     # Frontend
-    ("React",          "react",          "frontend", True,  "Avanzado"),
-    ("HTML/CSS",       "html5",          "frontend", True,  "Avanzado"),
+    ("React",          "react",          "frontend", True,  "Avanzado"),    # primario en 6 proyectos
+    ("HTML/CSS",       "html5",          "frontend", True,  "Intermedio"),  # UVG Help + base del portafolio
     ("Vue.js",         "vuejs",          "frontend", False, "Básico"),
-    ("Next.js",        "nextjs",         "frontend", True,  "Intermedio"),
+    ("Next.js",        "nextjs",         "frontend", True,  "Intermedio"),  # primario en 2 proyectos (SWAP, Iglesia PP)
     ("Angular",        "angular",        "frontend", False, "Básico"),
-    ("Svelte",         "svelte",         "frontend", False, "Básico"),
-    ("Tailwind CSS",   "tailwindcss",    "frontend", False, "Intermedio"),
+    ("Svelte",         "svelte",         "frontend", False, "Básico"),      # 1 proyecto (QuetzalShop)
+    ("Tailwind CSS",   "tailwindcss",    "frontend", False, "Básico"),
     ("Framer Motion",  "framermotion",   "frontend", False, "Básico"),
     ("Vite",           "vite",           "frontend", False, "Básico"),
     # Backend
-    ("Node.js",        "nodejs",         "backend",  True,  "Intermedio"),
-    ("Flask",          "flask",          "backend",  True,  "Intermedio"),
-    ("FastAPI",        "fastapi",        "backend",  True,  "Intermedio"),
-    ("Django",         "django",         "backend",  False, "Básico"),
-    ("Express",        "express",        "backend",  False, "Básico"),
+    ("Node.js",        "nodejs",         "backend",  True,  "Avanzado"),    # primario en 3 proyectos (SWAP, SKY, ED)
+    ("Flask",          "flask",          "backend",  True,  "Básico"),      # 1 proyecto (Cash U Control)
+    ("FastAPI",        "fastapi",        "backend",  True,  "Avanzado"),    # primario en 4 proyectos
+    ("Django",         "django",         "backend",  False, "Básico"),      # 1 proyecto (BecaGo)
+    ("Express",        "express",        "backend",  True,  "Intermedio"),  # primario en 3 proyectos (SWAP, SKY, ED)
     ("NestJS",         "nestjs",         "backend",  False, "Básico"),
-    ("Spring Boot",    "springboot",     "backend",  True,  "Básico"),
+    ("Spring Boot",    "springboot",     "backend",  True,  "Básico"),      # 1 proyecto (Entérate)
     ("Laravel",        "laravel",        "backend",  False, "Básico"),
     # Bases de datos
-    ("MongoDB",        "mongodb",        "database", True,  "Intermedio"),
-    ("MySQL",          "mysql",          "database", True,  "Intermedio"),
-    ("SQL Server",     "microsoftsqlserver", "database", True, "Básico"),
-    ("Neo4j",          "neo4j",          "database", True,  "Básico"),
-    ("PostgreSQL",     "postgresql",     "database", True,  "Intermedio"),
+    ("MongoDB",        "mongodb",        "database", True,  "Básico"),      # 1 proyecto (Cash U Control)
+    ("MySQL",          "mysql",          "database", True,  "Básico"),      # conocimiento de cursos
+    ("SQL Server",     "microsoftsqlserver", "database", True, "Básico"),   # 1 proyecto (Entérate)
+    ("Neo4j",          "neo4j",          "database", True,  "Básico"),      # 1 proyecto (ED Discover)
+    ("PostgreSQL",     "postgresql",     "database", True,  "Avanzado"),    # primario en 6 proyectos
     ("Redis",          "redis",          "database", False, "Básico"),
     ("SQLite",         "sqlite",         "database", False, "Básico"),
     ("Supabase",       "supabase",       "database", False, "Básico"),
     ("Firebase",       "firebase",       "database", False, "Básico"),
     # DevOps / Infra
-    ("Git",            "git",            "tool",     True,  "Avanzado"),
-    ("Docker",         "docker",         "devops",   True,  "Intermedio"),
+    ("Git",            "git",            "tool",     True,  "Avanzado"),    # todos los proyectos
+    ("Docker",         "docker",         "devops",   True,  "Intermedio"),  # 7 proyectos (2 prim, 5 sec)
     ("Kubernetes",     "kubernetes",     "devops",   False, "Básico"),
     ("Nginx",          "nginx",          "devops",   False, "Básico"),
     ("GitHub Actions", "githubactions",  "devops",   False, "Básico"),
@@ -66,19 +66,19 @@ TECHNOLOGIES = [
     ("GCP",            "gcp",            "devops",   False, "Básico"),
     ("Vercel",         "vercel",         "devops",   False, "Básico"),
     # IA / ML
-    ("OpenAI",         "openai",         "ai",       False, "Básico"),
+    ("OpenAI",         "openai",         "ai",       True,  "Intermedio"),  # primario en 2 proyectos (SKY, SalesAI)
     ("Anthropic",      "anthropic",      "ai",       False, "Básico"),
     ("LangChain",      "langchain",      "ai",       False, "Básico"),
     ("TensorFlow",     "tensorflow",     "ai",       False, "Básico"),
     ("PyTorch",        "pytorch",        "ai",       False, "Básico"),
     # Herramientas
-    ("Hibernate",      "hibernate",      "tool",     True,  "Básico"),
+    ("Hibernate",      "hibernate",      "tool",     True,  "Básico"),      # 1 proyecto (Entérate vía JPA)
     ("Figma",          "figma",          "tool",     False, "Básico"),
     ("GraphQL",        "graphql",        "tool",     False, "Básico"),
-    ("REST API",       "rest",           "tool",     True,  "Intermedio"),
+    ("REST API",       "rest",           "tool",     True,  "Avanzado"),    # prácticamente todos los proyectos
     ("WebSockets",     "websockets",     "tool",     False, "Básico"),
     ("Socket.io",      "socketio",       "tool",     False, "Básico"),
-    ("SQLAlchemy",     "sqlalchemy",     "tool",     True,  "Intermedio"),
+    ("SQLAlchemy",     "sqlalchemy",     "tool",     True,  "Intermedio"),  # secundario en 2 proyectos
     ("Prisma",         "prisma",         "tool",     False, "Básico"),
 ]
 

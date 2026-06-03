@@ -4,12 +4,12 @@ import Icon from '../../../components/Icon'
 import CVModal from '../../../components/CVModal'
 
 const DATA = [
-  { label: 'Ubicación',      value: 'Ciudad de Guatemala, Z.3' },
-  { label: 'Modalidad',      value: 'Remoto / Híbrido'         },
-  { label: 'Disponibilidad', value: 'Medio tiempo · Freelance' },
-  { label: 'Horario',        value: 'Matutino (negociable)'    },
-  { label: 'Enfoque',        value: 'Desarrollo de Software'   },
-  { label: 'Teléfono',       value: '3653-4283'                },
+  { label: 'Ubicación',      value: 'Ciudad de Guatemala, Z.3'                        },
+  { label: 'Modalidad',      value: 'Presencial · Híbrido · Remoto'                   },
+  { label: 'Disponibilidad', value: 'Medio tiempo · Freelance · Estudio tarde y noche'},
+  { label: 'Horario',        value: 'Negociable — tarde/noche reservadas para estudios'},
+  { label: 'Enfoque',        value: 'Desarrollo de Software'                           },
+  { label: 'Teléfono',       value: '+502 3653-4283'                                  },
 ]
 
 const vp = { once: false, amount: 0.12 }
