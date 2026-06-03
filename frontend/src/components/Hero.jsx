@@ -12,13 +12,18 @@ const NAV_ITEMS = [
   { id: 'contacto',  label: 'Contacto'   },
 ]
 
-function SideNav({ activeSection }) {
+function SideNav({ items, activeSection }) {
+  const nav = items || NAV_ITEMS
+  const handleClick = (e, id) => {
+    e.preventDefault()
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
   return (
     <nav style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      {NAV_ITEMS.map(({ id, label }) => {
+      {nav.map(({ id, label }) => {
         const isActive = activeSection === id
         return (
-          <a key={id} href={`#${id}`} style={{
+          <a key={id} href={`#${id}`} onClick={(e) => handleClick(e, id)} style={{
             display: 'flex', alignItems: 'center', gap: '0.75rem',
             textDecoration: 'none',
           }}>
@@ -107,7 +112,7 @@ function MobileHero() {
   )
 }
 
-export default function Hero({ progress, activeSection, contentScroll, isMobile }) {
+export default function Hero({ progress, activeSection, contentScroll, isMobile, navItems }) {
   const { theme } = useTheme()
   if (isMobile) return <MobileHero />
   const mx  = useMotionValue(0)
@@ -292,7 +297,7 @@ export default function Hero({ progress, activeSection, contentScroll, isMobile 
               donde el movimiento tiene sentido y cada detalle suma.
             </motion.p>
             <motion.div style={{ position: 'absolute', top: 0, left: 0, opacity: sideNavOpacity }}>
-              <SideNav activeSection={activeSection} />
+              <SideNav items={navItems} activeSection={activeSection} />
             </motion.div>
           </div>
         </motion.div>

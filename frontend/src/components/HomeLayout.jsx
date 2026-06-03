@@ -3,14 +3,14 @@ import { motion, useSpring, useTransform, useMotionValue } from 'framer-motion'
 import Hero from './Hero'
 import { useIsMobile } from '../hooks/useIsMobile'
 
-export default function HomeLayout({ children, activeSection }) {
+export default function HomeLayout({ children, activeSection, navItems, startCollapsed = false }) {
   const isMobile = useIsMobile()
 
-  const rawProgress = useMotionValue(0)
+  const rawProgress = useMotionValue(startCollapsed ? 1 : 0)
   const progress    = useSpring(rawProgress, { stiffness: 55, damping: 18, mass: 1 })
   const contentRef  = useRef(null)
   const heroRef     = useRef(null)
-  const [transitioned, setTransitioned] = useState(false)
+  const [transitioned, setTransitioned] = useState(startCollapsed)
 
   useEffect(() => {
     if (isMobile || transitioned) return
@@ -61,7 +61,7 @@ export default function HomeLayout({ children, activeSection }) {
       <div style={{ background: 'var(--bg)', overflowY: 'auto', minHeight: '100svh' }}
         className="scroll-container"
       >
-        <Hero isMobile activeSection={activeSection} />
+        <Hero isMobile activeSection={activeSection} navItems={navItems} />
         {children}
       </div>
     )
@@ -74,7 +74,7 @@ export default function HomeLayout({ children, activeSection }) {
         className="relative z-20 h-full flex-shrink-0 overflow-hidden"
         style={{ width: heroWidth, background: 'var(--bg)' }}
       >
-        <Hero progress={progress} activeSection={activeSection} contentScroll={contentScroll} />
+        <Hero progress={progress} activeSection={activeSection} contentScroll={contentScroll} navItems={navItems} />
       </motion.div>
       <motion.div
         ref={contentRef}

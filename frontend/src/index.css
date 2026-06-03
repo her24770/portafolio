@@ -771,6 +771,297 @@ button { font-family: inherit; cursor: pointer; }
   .det-next-text { align-items: center; }
 }
 
+/* ── About Page (ab-*) ── */
+.ab-section {
+  padding: clamp(48px, 9vh, 100px) clamp(28px, 5vw, 80px);
+  max-width: 900px;
+}
+
+.ab-section-heading {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(30px, 3.8vw, 52px);
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  margin: 10px 0 0;
+  color: var(--ink);
+}
+
+/* Intro */
+.ab-intro-grid {
+  display: grid;
+  grid-template-columns: 1fr min(240px, 36%);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+  margin-top: clamp(1.5rem, 3vh, 2.5rem);
+}
+
+.ab-intro-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.ab-tagline {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(20px, 2.4vw, 32px);
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin: 0;
+}
+
+.ab-tagline em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.ab-bio {
+  font-size: clamp(13.5px, 1.05vw, 15.5px);
+  line-height: 1.72;
+  color: var(--ink-2);
+  max-width: 52ch;
+  margin: 0;
+}
+
+.ab-photo-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.ab-photo {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 18px;
+  display: block;
+  filter: grayscale(18%) contrast(1.04);
+}
+
+.ab-badge {
+  position: absolute;
+  top: -0.625rem;
+  right: -0.625rem;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  padding: 7px 11px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 2;
+  color: var(--ink-2);
+}
+
+.ab-location {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 0.75rem;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-2);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  z-index: 2;
+}
+
+/* Stack grid */
+.ab-tech-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-top: clamp(1.5rem, 3vh, 2.5rem);
+}
+
+.ab-tech-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: clamp(0.875rem, 2.2vw, 1.375rem) 0.75rem;
+  background: var(--bg);
+  position: relative;
+  transition: background 0.22s ease;
+}
+
+.ab-tech-item::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--ab-color, var(--accent));
+  opacity: 0.55;
+  transition: opacity 0.22s ease;
+}
+
+.ab-tech-item:hover { background: color-mix(in oklab, var(--ab-color, var(--accent)) 5%, var(--bg)); }
+.ab-tech-item:hover::before { opacity: 1; }
+
+.ab-tech-icon { width: 34px; height: 34px; object-fit: contain; }
+.ab-tech-dot  { width: 10px; height: 10px; border-radius: 50%; background: var(--ink-3); display: block; }
+
+.ab-tech-name {
+  font-weight: 600;
+  font-size: 12.5px;
+  color: var(--ink);
+  text-align: center;
+  line-height: 1.2;
+}
+
+.ab-tech-level {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ab-color, var(--accent));
+  opacity: 0.82;
+}
+
+/* Fortalezas */
+.ab-strengths {
+  display: flex;
+  flex-direction: column;
+  gap: 1.375rem;
+  margin-top: clamp(2rem, 4vh, 3rem);
+}
+
+.ab-strength {
+  display: flex;
+  gap: 1.125rem;
+  align-items: flex-start;
+}
+
+.ab-strength-ico {
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  background: color-mix(in oklab, var(--accent) 9%, var(--bg));
+  border: 1px solid color-mix(in oklab, var(--accent) 18%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
+.ab-strength-title {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.25;
+  margin: 0;
+}
+
+.ab-strength-desc {
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.65;
+  margin: 0.3rem 0 0;
+}
+
+/* Timeline */
+.ab-timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-top: clamp(1.5rem, 3vh, 2.5rem);
+}
+
+.ab-timeline::before {
+  content: '';
+  position: absolute;
+  left: 7.25rem;
+  top: 8px;
+  bottom: 0;
+  width: 1px;
+  background: var(--line);
+}
+
+.ab-tl-item {
+  display: grid;
+  grid-template-columns: 7.25rem 1fr;
+  gap: 2.25rem;
+  padding-bottom: clamp(1.625rem, 3.5vh, 2.5rem);
+  position: relative;
+}
+
+.ab-tl-item:last-child { padding-bottom: 0; }
+
+.ab-tl-dot {
+  position: absolute;
+  left: calc(7.25rem - 4px);
+  top: 5px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--ink-3);
+  border: 2px solid var(--bg);
+  z-index: 1;
+  transition: background 0.35s ease;
+}
+
+.ab-tl-dot.current {
+  background: var(--accent);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent) 18%, transparent);
+}
+
+.ab-tl-period {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-3);
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  text-align: right;
+  padding-top: 2px;
+  margin: 0;
+}
+
+.ab-tl-period.current { color: var(--accent); font-weight: 700; }
+
+.ab-tl-title {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink);
+  line-height: 1.25;
+  margin: 0;
+}
+
+.ab-tl-company {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-2);
+  margin: 3px 0 0;
+}
+
+.ab-tl-desc {
+  font-size: 12.5px;
+  color: var(--ink-3);
+  line-height: 1.65;
+  margin: 0.5rem 0 0;
+  font-style: italic;
+}
+
+/* About responsive */
+@media (max-width: 680px) {
+  .ab-intro-grid { grid-template-columns: 1fr; }
+  .ab-photo-wrap { max-width: 260px; margin: 0 auto; }
+  .ab-tech-grid  { grid-template-columns: repeat(2, 1fr); }
+  .ab-timeline::before { left: 5.5rem; }
+  .ab-tl-item { grid-template-columns: 5.5rem 1fr; gap: 1.5rem; }
+  .ab-tl-dot  { left: calc(5.5rem - 4px); }
+  .ab-tl-period { font-size: 10px; }
+}
+
 /* ── mobile ── */
 @media (max-width: 767px) {
   body { font-size: 15px; }
