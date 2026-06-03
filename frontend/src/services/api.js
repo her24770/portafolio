@@ -13,7 +13,7 @@ function normalize(p, index) {
     n: String(index + 1).padStart(2, '0'),
     image: p.thumbnail_url,
     desc: p.description,
-    tags: primaryTechs.map(t => t.name),
+    tags: primaryTechs.map(t => ({ name: t.name, color: t.color })),
   }
 }
 

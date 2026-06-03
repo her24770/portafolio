@@ -18,4 +18,5 @@ class TechnologyWithImportance(BaseModel):
     name: str
     icon: str | None = None
     category: str | None = None
+    color: str | None = None
     importance: str  # "primary" | "secondary"

@@ -41,6 +41,13 @@ function Prose({ text }) {
   )
 }
 
+const REPO_LABELS = ['Frontend', 'Backend', 'Microservicio', 'Workers']
+
+function repoLabel(urls, i) {
+  if (urls.length === 1) return 'GitHub'
+  return REPO_LABELS[i] ?? `Repo ${i + 1}`
+}
+
 export default function ProjectDetail() {
   const { slug } = useParams()
   const navigate = useNavigate()
@@ -85,7 +92,9 @@ export default function ProjectDetail() {
 
   const currentIndex = allProjects.findIndex(proj => proj.slug === slug)
   const nextIndex = (currentIndex + 1) % allProjects.length
+  const prevIndex = (currentIndex - 1 + allProjects.length) % allProjects.length
   const next = allProjects[nextIndex] ?? allProjects[0]
+  const prev = allProjects.length > 1 ? allProjects[prevIndex] : null
   const total = allProjects.length
 
   const statusDone = p.status !== 'in_progress'
@@ -185,12 +194,15 @@ export default function ProjectDetail() {
                 <div className="det-stat-row">
                   <span className="det-stat-label">Código</span>
                   <span className="det-repo-links">
-                    {p.repo_urls.map((r, i) => (
-                      <a key={i} href={r} target="_blank" rel="noreferrer" className="det-repo-link">
-                        <Icon name="github" width={14} height={14} />
-                        {p.repo_urls.length > 1 ? (i === 0 ? 'Front' : 'Back') : 'GitHub'}
-                      </a>
-                    ))}
+                    {p.repo_urls.map((r, i) => {
+                      const label = repoLabel(p.repo_urls, i)
+                      return (
+                        <a key={i} href={r} target="_blank" rel="noreferrer" className="det-repo-pill">
+                          <Icon name="github" width={12} height={12} />
+                          {label}
+                        </a>
+                      )
+                    })}
                   </span>
                 </div>
               )}
@@ -273,16 +285,23 @@ export default function ProjectDetail() {
               {p.team_size && (
                 <div className="det-fact"><dt>Equipo</dt><dd>{p.team_size > 1 ? `${p.team_size} personas` : 'Solo dev'}</dd></div>
               )}
-              {p.repo_urls?.map((r, i) => (
-                <div className="det-fact" key={i}>
-                  <dt>{p.repo_urls.length > 1 ? (i === 0 ? 'Repo Frontend' : 'Repo Backend') : 'Repositorio'}</dt>
-                  <dd>
-                    <a href={r} target="_blank" rel="noreferrer" className="det-github-link">
-                      <Icon name="github" width={20} height={20} />
-                    </a>
-                  </dd>
-                </div>
-              ))}
+              {p.repo_urls?.map((r, i) => {
+                const label = p.repo_urls.length === 1 ? 'Repositorio' : `Repo ${repoLabel(p.repo_urls, i)}`
+                return (
+                  <div className="det-fact" key={i}>
+                    <dt>{label}</dt>
+                    <dd>
+                      <a href={r} target="_blank" rel="noreferrer" className="det-repo-pill">
+                        <Icon name="github" width={12} height={12} />
+                        Ver en GitHub
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M7 17L17 7M17 7H7M17 7v10"/>
+                        </svg>
+                      </a>
+                    </dd>
+                  </div>
+                )
+              })}
             </div>
             {p.demo_url && (
               <div className="det-links">
@@ -298,6 +317,8 @@ export default function ProjectDetail() {
           <NextProject
             project={next}
             onNavigate={() => navigate(`/projects/${next.slug}`)}
+            prev={prev}
+            onPrev={() => navigate(`/projects/${prev.slug}`)}
           />
         )}
       </motion.div>

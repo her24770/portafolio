@@ -36,7 +36,9 @@ export default function TechGrid({ technologies }) {
       variants={container}
     >
       {technologies.map(t => (
-        <motion.div className="det-tech" key={t.name} variants={item}>
+        <motion.div className="det-tech" key={t.name} variants={item}
+          style={{ '--tech-color': t.color ?? 'var(--accent)' }}
+        >
           <span className="det-tech-ico"><TechIcon icon={t.icon} /></span>
           <span className="det-tech-meta">
             <span className="det-tech-name">{t.name}</span>

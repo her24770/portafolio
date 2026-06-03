@@ -55,7 +55,7 @@ export default function Panel({ index, dir, total, projects, panelRef, onNavigat
           </div>
           <div className="tags" style={{ marginBottom: '2rem' }}>
             {p.tags.map((t, j) => (
-              <span className={'tag' + (j === 0 ? ' k' : '')} key={t}>{t}</span>
+              <span className="tag" key={t.name} style={{ '--tag-color': t.color ?? 'var(--accent)' }}>{t.name}</span>
             ))}
           </div>
           <button className="btn" style={{ alignSelf: 'flex-start' }} onClick={openDetail}>

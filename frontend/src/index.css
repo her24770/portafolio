@@ -255,13 +255,9 @@ button { font-family: inherit; cursor: pointer; }
 .tag {
   font-size: 12px; font-weight: 600;
   padding: 5px 12px; border-radius: 999px;
-  background: var(--bg); color: var(--ink-2);
-  border: 1px solid var(--line-2);
-}
-.tag.k {
-  background: color-mix(in oklab, var(--accent) 12%, white);
-  color: color-mix(in oklab, var(--accent) 72%, black);
-  border-color: color-mix(in oklab, var(--accent) 22%, transparent);
+  background: color-mix(in oklab, var(--tag-color, var(--accent)) 12%, white);
+  color: color-mix(in oklab, var(--tag-color, var(--accent)) 72%, black);
+  border: 1px solid color-mix(in oklab, var(--tag-color, var(--accent)) 22%, transparent);
 }
 .plink {
   display: inline-flex; align-items: center; gap: 7px;
@@ -651,15 +647,15 @@ button { font-family: inherit; cursor: pointer; }
 }
 .det-tech:hover {
   transform: translateY(-3px);
-  border-color: color-mix(in oklab, var(--accent) 40%, var(--line));
-  box-shadow: 0 16px 36px -18px color-mix(in oklab, var(--accent) 30%, transparent);
+  border-color: color-mix(in oklab, var(--tech-color, var(--accent)) 40%, var(--line));
+  box-shadow: 0 16px 36px -18px color-mix(in oklab, var(--tech-color, var(--accent)) 30%, transparent);
 }
 .det-tech-ico {
   width: 30px; height: 30px; border-radius: 8px;
   background: var(--bg); display: grid; place-items: center; flex-shrink: 0; overflow: hidden;
 }
 .det-tech-ico img { width: 20px; height: 20px; object-fit: contain; }
-.det-tech-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+.det-tech-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--tech-color, var(--accent)); }
 .det-tech-meta { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
 .det-tech-name { font-size: 13.5px; font-weight: 500; letter-spacing: -0.01em; }
 .det-tech-cat { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
@@ -690,23 +686,23 @@ button { font-family: inherit; cursor: pointer; }
 }
 .det-fact-link:hover { gap: 9px; }
 
-/* GitHub icon link in ficha */
-.det-github-link {
-  display: inline-flex; align-items: center;
-  color: var(--ink); opacity: 0.7;
-  text-decoration: none; transition: opacity 0.2s ease, transform 0.2s ease;
-}
-.det-github-link:hover { opacity: 1; transform: scale(1.12); }
-
-/* Repo links in hero stat card */
-.det-repo-links { display: flex; flex-direction: column; gap: 4px; }
-.det-repo-link {
+/* Repo links — hero card + ficha */
+.det-repo-links { display: flex; flex-direction: column; gap: 5px; }
+.det-repo-pill {
   display: inline-flex; align-items: center; gap: 5px;
-  font-size: 12px; font-weight: 500; color: var(--ink-2);
+  padding: 5px 10px; border-radius: 999px;
+  font-size: 12px; font-weight: 600;
+  color: var(--ink-2); background: var(--bg);
+  border: 1px solid var(--line);
   text-decoration: none;
-  transition: color 0.2s ease, gap 0.2s ease;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  white-space: nowrap;
 }
-.det-repo-link:hover { color: var(--accent); gap: 8px; }
+.det-repo-pill:hover {
+  color: var(--ink);
+  border-color: color-mix(in oklab, var(--accent) 40%, var(--line));
+  background: color-mix(in oklab, var(--accent) 6%, var(--bg));
+}
 
 /* next project */
 .det-next {
@@ -757,6 +753,30 @@ button { font-family: inherit; cursor: pointer; }
   transition: transform 0.3s ease, gap 0.3s ease;
 }
 .det-next-cta:hover { transform: translateY(-2px); gap: 15px; }
+
+.det-prev-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: none; border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 999px; padding: 9px 18px 9px 14px;
+  cursor: pointer; font-family: inherit;
+  color: rgba(255,255,255,0.55);
+  transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+  text-align: left;
+}
+.det-prev-btn:hover {
+  color: #fff;
+  border-color: rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.05);
+}
+.det-prev-label {
+  display: block; font-size: 10px; font-weight: 600;
+  letter-spacing: 0.13em; text-transform: uppercase;
+  color: rgba(255,255,255,0.35); margin-bottom: 1px;
+}
+.det-prev-title {
+  display: block; font-size: 14px; font-weight: 600;
+  letter-spacing: -0.01em; color: inherit;
+}
 
 /* responsive */
 @media (max-width: 860px) {

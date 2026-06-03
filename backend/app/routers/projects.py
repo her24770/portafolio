@@ -27,6 +27,7 @@ def _build_techs_with_importance(project) -> List[TechnologyWithImportance]:
             name=pt.technology.name,
             icon=pt.technology.icon,
             category=pt.technology.category,
+            color=pt.technology.color,
             importance=pt.importance,
         )
         for pt in project.project_techs
