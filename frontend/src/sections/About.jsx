@@ -34,14 +34,14 @@ export default function About() {
             Saber más <Icon name="arrow" className="arr" width={16} height={16} />
           </a>
 
-          <div style={{ display: 'flex', gap: '0.875rem', alignItems: 'center', marginTop: '1.75rem', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '1.25rem', alignItems: 'center', justifyContent: 'center', marginTop: '1.75rem', flexWrap: 'wrap' }}>
             {[
               { src: '/assets/logo_kinal.png', alt: 'Kinal' },
               { src: '/assets/logo_uvg.png',   alt: 'Universidad del Valle de Guatemala' },
               { src: '/assets/logo_fjbg.png',  alt: 'Fundación Juan Bautista Gutiérrez' },
             ].map(({ src, alt }) => (
               <div key={alt} style={{
-                width: 56, height: 56, borderRadius: '50%',
+                width: 132, height: 132, borderRadius: '50%',
                 background: '#ffffff',
                 boxShadow: '0 2px 10px rgba(0,0,0,0.11), 0 0 0 1px rgba(0,0,0,0.07)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',

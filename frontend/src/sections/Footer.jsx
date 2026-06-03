@@ -26,7 +26,7 @@ export default function Footer() {
           {[
             { href: 'mailto:josuehernandez.fjbg@gmail.com', icon: 'mail'     },
             { href: 'https://linkedin.com/in/josue-hernandez-gonzalez', icon: 'linkedin', blank: true },
-            { href: 'https://github.com',                                icon: 'github',   blank: true },
+            { href: 'https://github.com/her24770',                        icon: 'github',   blank: true },
           ].map(({ href, icon, blank }) => (
             <a key={icon} href={href}
               {...(blank ? { target: '_blank', rel: 'noreferrer' } : {})}

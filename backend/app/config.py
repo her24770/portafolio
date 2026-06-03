@@ -19,6 +19,10 @@ class Settings(BaseSettings):
     r2_bucket_name: str = ""
     r2_public_url: str = ""
 
+    gmail_user: str = ""
+    gmail_app_password: str = ""
+    gmail_to: str = ""
+
     @property
     def cors_origins_list(self) -> list[str]:
         return [origin.strip() for origin in self.cors_origins.split(",")]

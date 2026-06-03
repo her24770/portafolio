@@ -50,13 +50,15 @@ export default function Contact() {
         padding: 'clamp(56px, 11vh, 120px) clamp(30px, 5vw, 90px)',
       }}
     >
-      <div style={{
-        maxWidth: 1080,
-        display: 'grid',
-        gridTemplateColumns: isMobile ? '1fr' : '1.05fr 1fr',
-        gap: 'clamp(32px, 6vw, 90px)',
-        alignItems: 'start',
-      }}>
+      <div style={{ maxWidth: 1080 }}>
+
+        {/* ── Dos columnas: info + formulario ── */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: isMobile ? '1fr' : '1.05fr 1fr',
+          gap: 'clamp(32px, 6vw, 90px)',
+          alignItems: 'start',
+        }}>
 
         {/* ── Left: info ── */}
         <div className="reveal">
@@ -93,44 +95,9 @@ export default function Contact() {
           <p style={{ margin: '0 0 10px', color: 'rgba(255,255,255,0.72)', fontSize: 15.5, lineHeight: 1.6, maxWidth: '38ch', fontWeight: 500 }}>
             Busco trabajo de medio tiempo mientras termino mis estudios — posición fija o por proyecto.
           </p>
-          <p style={{ margin: '0 0 28px', color: 'rgba(255,255,255,0.5)', fontSize: 15, lineHeight: 1.6, maxWidth: '38ch' }}>
+          <p style={{ margin: 0, color: 'rgba(255,255,255,0.5)', fontSize: 15, lineHeight: 1.6, maxWidth: '38ch' }}>
             También hago freelance. Si tienes una vacante, un proyecto o simplemente quieres conectar, escríbeme. Respondo en menos de 24 horas.
           </p>
-
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
-            {SOCIALS.map((s) => (
-              <a
-                key={s.label}
-                href={s.href}
-                {...(s.blank ? { target: '_blank', rel: 'noreferrer' } : {})}
-                {...(s.download ? { download: s.download } : {})}
-                style={{
-                  display: 'inline-flex', alignItems: 'center', gap: 9,
-                  padding: '11px 16px',
-                  border: '1px solid rgba(255,255,255,0.16)',
-                  borderRadius: 999,
-                  fontSize: 14, fontWeight: 600,
-                  color: 'rgba(255,255,255,0.82)',
-                  transition: 'transform .25s ease, background .25s ease, border-color .25s ease, color .25s ease',
-                  textDecoration: 'none',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-2px)'
-                  e.currentTarget.style.background = 'rgba(255,255,255,0.07)'
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'
-                  e.currentTarget.style.color = '#fff'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = ''
-                  e.currentTarget.style.background = ''
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.16)'
-                  e.currentTarget.style.color = 'rgba(255,255,255,0.82)'
-                }}
-              >
-                <Icon name={s.icon} width={16} height={16} /> {s.label}
-              </a>
-            ))}
-          </div>
         </div>
 
         {/* ── Right: form ── */}
@@ -181,6 +148,44 @@ export default function Contact() {
             </form>
           )}
         </div>
+        </div>{/* fin grid dos columnas */}
+
+        {/* ── Links — ancho completo debajo de las dos columnas ── */}
+        <div className="reveal" style={{ marginTop: 'clamp(2rem, 4vh, 3rem)', display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+          {SOCIALS.map((s) => (
+            <a
+              key={s.label}
+              href={s.href}
+              {...(s.blank ? { target: '_blank', rel: 'noreferrer' } : {})}
+              {...(s.download ? { download: s.download } : {})}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 9,
+                padding: '11px 16px',
+                border: '1px solid rgba(255,255,255,0.16)',
+                borderRadius: 999,
+                fontSize: 14, fontWeight: 600,
+                color: 'rgba(255,255,255,0.82)',
+                transition: 'transform .25s ease, background .25s ease, border-color .25s ease, color .25s ease',
+                textDecoration: 'none', whiteSpace: 'nowrap',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)'
+                e.currentTarget.style.background = 'rgba(255,255,255,0.07)'
+                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'
+                e.currentTarget.style.color = '#fff'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = ''
+                e.currentTarget.style.background = ''
+                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.16)'
+                e.currentTarget.style.color = 'rgba(255,255,255,0.82)'
+              }}
+            >
+              <Icon name={s.icon} width={16} height={16} /> {s.label}
+            </a>
+          ))}
+        </div>
+
       </div>
     </section>
   )
