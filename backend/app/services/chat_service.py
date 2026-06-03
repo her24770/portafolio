@@ -8,7 +8,7 @@ from app.services.project_service import get_all_projects, get_project_by_slug
 
 settings = get_settings()
 ABOUT_DIR = Path(__file__).parent.parent.parent / "about"
-MODEL = "gpt-4o"
+MODEL = "gpt-4o-mini"
 
 TOOLS = [
     {
@@ -164,17 +164,38 @@ def _handle_tool(db: Session, tool_name: str, tool_input: dict) -> dict:
     return {"error": f"Herramienta '{tool_name}' no reconocida"}
 
 
+def _clean(text: str) -> str:
+    import re
+    # quitar markdown
+    text = re.sub(r'\*{1,2}(.+?)\*{1,2}', r'\1', text)   # **bold** y *italic*
+    text = re.sub(r'^#{1,6}\s+', '', text, flags=re.MULTILINE)  # encabezados
+    text = re.sub(r'^\s*[-*]\s+', '', text, flags=re.MULTILINE)  # bullets
+    text = re.sub(r'^\s*\d+\.\s+', '', text, flags=re.MULTILINE)  # listas numeradas
+    # colapsar líneas en blanco múltiples
+    text = re.sub(r'\n{2,}', ' ', text).strip()
+    text = re.sub(r'\n', ' ', text)
+    # truncar a 3 oraciones
+    sentences = re.split(r'(?<=[.!?])\s+', text)
+    return ' '.join(sentences[:3]).strip()
+
+
 def process_chat(db: Session, user_message: str, history: list[dict] = []) -> str:
     projects = get_all_projects(db)
 
-    system_prompt = f"""Eres Sky, un asistente virtual del portafolio de Josue Hernández, desarrollador fullstack guatemalteco. Responde de forma directa y profesional, sin ser excesivamente formal.
+    system_prompt = f"""Eres Sky, el asistente del portafolio de Josue Hernández. Respondes como si fuera un chat, no un documento.
 
-Tienes herramientas para obtener información detallada sobre Josue y sus proyectos. Úsalas según lo que pregunte el usuario — no cargues información que no sea necesaria.
+FORMATO — sin excepciones:
+- Texto plano puro. Cero markdown: sin asteriscos, sin guiones de lista, sin almohadillas, sin negritas.
+- Máximo 2 oraciones en tu respuesta final. No importa cuánta información tengas disponible: elige lo más relevante y di solo eso.
+- Si el usuario quiere más detalle, lo pedirá. No lo anticipes.
 
-Proyectos disponibles (resumen):
-{json.dumps(_projects_to_summary(projects), ensure_ascii=False, indent=2)}
+CONTENIDO:
+- Cuando uses una herramienta y obtengas información extensa, extrae solo los 2-3 puntos más representativos.
+- Nunca enumeres todo lo que está en el archivo. Sintetiza.
 
-Responde siempre en el idioma en que te hablen."""
+Proyectos: {', '.join(p['title'] for p in _projects_to_summary(projects))}
+
+Responde en el idioma del usuario."""
 
     client = OpenAI(api_key=settings.openai_api_key)
 
@@ -194,12 +215,13 @@ Responde siempre en el idioma en que te hablen."""
             model=MODEL,
             tools=TOOLS,
             messages=messages,
+            max_tokens=600,
         )
 
         message = response.choices[0].message
 
         if not message.tool_calls:
-            return message.content or ""
+            return _clean(message.content or "")
 
         messages.append({
             "role": "assistant",

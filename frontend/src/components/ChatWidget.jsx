@@ -5,7 +5,7 @@ import { sendChat } from '../services/api'
 const WELCOME = {
   id: 0,
   role: 'ai',
-  text: '¡Hola! Soy Sky, el asistente virtual de Josue. ¿En qué puedo ayudarte?',
+  text: 'Hola, soy Sky. Puedes preguntarme cualquier cosa sobre Josue: sus proyectos, experiencia, stack, cómo contactarlo... lo que necesites.',
 }
 
 const ease = [0.22, 1, 0.36, 1]
