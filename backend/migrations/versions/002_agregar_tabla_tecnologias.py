@@ -15,70 +15,71 @@ down_revision: Union[str, None] = "001"
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
-# (name, icon, category, my_stack)
+# (name, icon, category, my_stack, level)
+# level: "Avanzado" | "Intermedio" | "Básico"
 TECHNOLOGIES = [
     # Lenguajes
-    ("Java",           "java",           "language", True),
-    ("JavaScript",     "javascript",     "language", True),
-    ("TypeScript",     "typescript",     "language", False),
-    ("Python",         "python",         "language", True),
-    ("Go",             "go",             "language", False),
-    ("Rust",           "rust",           "language", False),
-    ("PHP",            "php",            "language", False),
+    ("Java",           "java",           "language", True,  "Intermedio"),
+    ("JavaScript",     "javascript",     "language", True,  "Avanzado"),
+    ("TypeScript",     "typescript",     "language", True,  "Intermedio"),
+    ("Python",         "python",         "language", True,  "Avanzado"),
+    ("Go",             "go",             "language", False, "Básico"),
+    ("Rust",           "rust",           "language", False, "Básico"),
+    ("PHP",            "php",            "language", False, "Básico"),
     # Frontend
-    ("React",          "react",          "frontend", True),
-    ("HTML/CSS",       "html5",          "frontend", True),
-    ("Vue.js",         "vuejs",          "frontend", False),
-    ("Next.js",        "nextjs",         "frontend", False),
-    ("Angular",        "angular",        "frontend", False),
-    ("Svelte",         "svelte",         "frontend", False),
-    ("Tailwind CSS",   "tailwindcss",    "frontend", False),
-    ("Framer Motion",  "framermotion",   "frontend", False),
-    ("Vite",           "vite",           "frontend", False),
+    ("React",          "react",          "frontend", True,  "Avanzado"),
+    ("HTML/CSS",       "html5",          "frontend", True,  "Avanzado"),
+    ("Vue.js",         "vuejs",          "frontend", False, "Básico"),
+    ("Next.js",        "nextjs",         "frontend", True,  "Intermedio"),
+    ("Angular",        "angular",        "frontend", False, "Básico"),
+    ("Svelte",         "svelte",         "frontend", False, "Básico"),
+    ("Tailwind CSS",   "tailwindcss",    "frontend", False, "Intermedio"),
+    ("Framer Motion",  "framermotion",   "frontend", False, "Básico"),
+    ("Vite",           "vite",           "frontend", False, "Básico"),
     # Backend
-    ("Node.js",        "nodejs",         "backend",  True),
-    ("Flask",          "flask",          "backend",  True),
-    ("FastAPI",        "fastapi",        "backend",  False),
-    ("Django",         "django",         "backend",  False),
-    ("Express",        "express",        "backend",  False),
-    ("NestJS",         "nestjs",         "backend",  False),
-    ("Spring Boot",    "springboot",     "backend",  False),
-    ("Laravel",        "laravel",        "backend",  False),
+    ("Node.js",        "nodejs",         "backend",  True,  "Intermedio"),
+    ("Flask",          "flask",          "backend",  True,  "Intermedio"),
+    ("FastAPI",        "fastapi",        "backend",  True,  "Intermedio"),
+    ("Django",         "django",         "backend",  False, "Básico"),
+    ("Express",        "express",        "backend",  False, "Básico"),
+    ("NestJS",         "nestjs",         "backend",  False, "Básico"),
+    ("Spring Boot",    "springboot",     "backend",  True,  "Básico"),
+    ("Laravel",        "laravel",        "backend",  False, "Básico"),
     # Bases de datos
-    ("MongoDB",        "mongodb",        "database", True),
-    ("MySQL",          "mysql",          "database", True),
-    ("SQL Server",     "microsoftsqlserver", "database", True),
-    ("Neo4j",          "neo4j",          "database", True),
-    ("PostgreSQL",     "postgresql",     "database", False),
-    ("Redis",          "redis",          "database", False),
-    ("SQLite",         "sqlite",         "database", False),
-    ("Supabase",       "supabase",       "database", False),
-    ("Firebase",       "firebase",       "database", False),
+    ("MongoDB",        "mongodb",        "database", True,  "Intermedio"),
+    ("MySQL",          "mysql",          "database", True,  "Intermedio"),
+    ("SQL Server",     "microsoftsqlserver", "database", True, "Básico"),
+    ("Neo4j",          "neo4j",          "database", True,  "Básico"),
+    ("PostgreSQL",     "postgresql",     "database", True,  "Intermedio"),
+    ("Redis",          "redis",          "database", False, "Básico"),
+    ("SQLite",         "sqlite",         "database", False, "Básico"),
+    ("Supabase",       "supabase",       "database", False, "Básico"),
+    ("Firebase",       "firebase",       "database", False, "Básico"),
     # DevOps / Infra
-    ("Git",            "git",            "tool",     True),
-    ("Docker",         "docker",         "devops",   False),
-    ("Kubernetes",     "kubernetes",     "devops",   False),
-    ("Nginx",          "nginx",          "devops",   False),
-    ("GitHub Actions", "githubactions",  "devops",   False),
-    ("Linux",          "linux",          "devops",   False),
-    ("AWS",            "aws",            "devops",   False),
-    ("GCP",            "gcp",            "devops",   False),
-    ("Vercel",         "vercel",         "devops",   False),
+    ("Git",            "git",            "tool",     True,  "Avanzado"),
+    ("Docker",         "docker",         "devops",   True,  "Intermedio"),
+    ("Kubernetes",     "kubernetes",     "devops",   False, "Básico"),
+    ("Nginx",          "nginx",          "devops",   False, "Básico"),
+    ("GitHub Actions", "githubactions",  "devops",   False, "Básico"),
+    ("Linux",          "linux",          "devops",   False, "Básico"),
+    ("AWS",            "aws",            "devops",   False, "Básico"),
+    ("GCP",            "gcp",            "devops",   False, "Básico"),
+    ("Vercel",         "vercel",         "devops",   False, "Básico"),
     # IA / ML
-    ("OpenAI",         "openai",         "ai",       False),
-    ("Anthropic",      "anthropic",      "ai",       False),
-    ("LangChain",      "langchain",      "ai",       False),
-    ("TensorFlow",     "tensorflow",     "ai",       False),
-    ("PyTorch",        "pytorch",        "ai",       False),
+    ("OpenAI",         "openai",         "ai",       False, "Básico"),
+    ("Anthropic",      "anthropic",      "ai",       False, "Básico"),
+    ("LangChain",      "langchain",      "ai",       False, "Básico"),
+    ("TensorFlow",     "tensorflow",     "ai",       False, "Básico"),
+    ("PyTorch",        "pytorch",        "ai",       False, "Básico"),
     # Herramientas
-    ("Hibernate",      "hibernate",      "tool",     True),
-    ("Figma",          "figma",          "tool",     False),
-    ("GraphQL",        "graphql",        "tool",     False),
-    ("REST API",       "rest",           "tool",     False),
-    ("WebSockets",     "websockets",     "tool",     False),
-    ("Socket.io",      "socketio",       "tool",     False),
-    ("SQLAlchemy",     "sqlalchemy",     "tool",     False),
-    ("Prisma",         "prisma",         "tool",     False),
+    ("Hibernate",      "hibernate",      "tool",     True,  "Básico"),
+    ("Figma",          "figma",          "tool",     False, "Básico"),
+    ("GraphQL",        "graphql",        "tool",     False, "Básico"),
+    ("REST API",       "rest",           "tool",     True,  "Intermedio"),
+    ("WebSockets",     "websockets",     "tool",     False, "Básico"),
+    ("Socket.io",      "socketio",       "tool",     False, "Básico"),
+    ("SQLAlchemy",     "sqlalchemy",     "tool",     True,  "Intermedio"),
+    ("Prisma",         "prisma",         "tool",     False, "Básico"),
 ]
 
 
@@ -95,6 +96,7 @@ def upgrade() -> None:
         sa.Column("icon", sa.String(), nullable=True),
         sa.Column("category", sa.String(), nullable=True),
         sa.Column("my_stack", sa.Boolean(), server_default="false", nullable=False),
+        sa.Column("level", sa.String(20), server_default="Básico", nullable=False),
         sa.UniqueConstraint("name"),
     )
 
@@ -116,10 +118,10 @@ def upgrade() -> None:
     )
 
     rows = ", ".join(
-        f"(gen_random_uuid(), '{name}', '{icon}', '{category}', {str(my_stack).lower()})"
-        for name, icon, category, my_stack in TECHNOLOGIES
+        f"(gen_random_uuid(), '{name}', '{icon}', '{category}', {str(my_stack).lower()}, '{level}')"
+        for name, icon, category, my_stack, level in TECHNOLOGIES
     )
-    op.execute(f"INSERT INTO technologies (id, name, icon, category, my_stack) VALUES {rows}")
+    op.execute(f"INSERT INTO technologies (id, name, icon, category, my_stack, level) VALUES {rows}")
 
 
 def downgrade() -> None:

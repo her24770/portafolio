@@ -23,3 +23,5 @@ class Technology(Base):
     icon = Column(String, nullable=True)
     category = Column(String, nullable=True)
     my_stack = Column(Boolean, default=False, server_default="false")
+    level = Column(String(20), default="Básico", server_default="Básico")
+    color = Column(String(20), nullable=True)

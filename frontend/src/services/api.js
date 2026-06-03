@@ -33,5 +33,5 @@ export async function fetchProject(slug) {
 }
 
 export async function fetchStack() {
-  return get('/api/stack')
+  return get('/api/technologies/stack')
 }

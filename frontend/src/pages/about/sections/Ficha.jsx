@@ -1,5 +1,7 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Icon from '../../../components/Icon'
+import CVModal from '../../../components/CVModal'
 
 const DATA = [
   { label: 'Ubicación',      value: 'Ciudad de Guatemala, Z.3' },
@@ -14,6 +16,7 @@ const vp = { once: false, amount: 0.12 }
 const ease = [0.22, 1, 0.36, 1]
 
 export default function Ficha() {
+  const [showCV, setShowCV] = useState(false)
   return (
     <section id="ficha" className="ab-section" style={{ paddingBottom: 'clamp(60px, 12vh, 120px)' }}>
       <motion.p className="eyebrow"
@@ -54,10 +57,12 @@ export default function Ficha() {
         <a className="btn ghost" href="https://linkedin.com/in/josue-hernandez-gonzalez" target="_blank" rel="noreferrer">
           <Icon name="linkedin" width={15} height={15} /> LinkedIn
         </a>
-        <a className="btn ghost" href="/assets/CV%20Josue%20Hern%C3%A1ndez.pdf" download="CV Josue Hernández.pdf">
-          <Icon name="doc" width={15} height={15} /> Descargar CV
-        </a>
+        <button className="btn ghost" onClick={() => setShowCV(true)}>
+          <Icon name="doc" width={15} height={15} /> Ver CV
+        </button>
       </motion.div>
+
+      <CVModal open={showCV} onClose={() => setShowCV(false)} />
     </section>
   )
 }

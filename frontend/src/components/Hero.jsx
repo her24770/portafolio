@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion'
 import Icon from './Icon'
 import Navbar from './Navbar'
+import CVModal from './CVModal'
 import { useTheme } from '../contexts/ThemeContext'
 
 const PHOTO = '/assets/perfil.png'
@@ -49,7 +51,7 @@ function SideNav({ items, activeSection }) {
   )
 }
 
-function MobileHero() {
+function MobileHero({ onOpenCV }) {
   return (
     <div style={{
       minHeight: '100svh', display: 'flex', flexDirection: 'column',
@@ -99,9 +101,9 @@ function MobileHero() {
           <a className="chip" href="mailto:josuehernandez.fjbg@gmail.com">
             <Icon name="mail" /> Email
           </a>
-          <a className="chip cv" href="/assets/CV%20Josue%20Hern%C3%A1ndez.pdf" download="CV Josue Hernández.pdf">
+          <button className="chip cv" onClick={onOpenCV}>
             <Icon name="doc" /> CV
-          </a>
+          </button>
         </div>
       </div>
 
@@ -114,7 +116,13 @@ function MobileHero() {
 
 export default function Hero({ progress, activeSection, contentScroll, isMobile, navItems }) {
   const { theme } = useTheme()
-  if (isMobile) return <MobileHero />
+  const [showCV, setShowCV] = useState(false)
+  if (isMobile) return (
+    <>
+      <MobileHero onOpenCV={() => setShowCV(true)} />
+      <CVModal open={showCV} onClose={() => setShowCV(false)} />
+    </>
+  )
   const mx  = useMotionValue(0)
   const my  = useMotionValue(0)
   const smx = useSpring(mx, { stiffness: 70, damping: 20 })
@@ -312,15 +320,15 @@ export default function Hero({ progress, activeSection, contentScroll, isMobile,
             <a className="chip" href="https://linkedin.com/in/josue-hernandez-gonzalez" target="_blank" rel="noreferrer">
               <Icon name="linkedin" /> LinkedIn
             </a>
-            <a className="chip" href="https://github.com" target="_blank" rel="noreferrer">
+            <a className="chip" href="https://github.com/her24770" target="_blank" rel="noreferrer">
               <Icon name="github" /> GitHub
             </a>
             <a className="chip" href="mailto:josuehernandez.fjbg@gmail.com">
               <Icon name="mail" /> Email
             </a>
-            <a className="chip cv" href="/assets/CV%20Josue%20Hern%C3%A1ndez.pdf" download="CV Josue Hernández.pdf">
+            <button className="chip cv" onClick={() => setShowCV(true)}>
               <Icon name="doc" /> CV
-            </a>
+            </button>
           </div>
         </motion.div>
       </motion.div>
@@ -335,6 +343,8 @@ export default function Hero({ progress, activeSection, contentScroll, isMobile,
       }}>
         <span className="mouse" /> Desliza para explorar
       </motion.div>
+
+      <CVModal open={showCV} onClose={() => setShowCV(false)} />
     </div>
   )
 }

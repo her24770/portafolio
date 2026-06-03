@@ -48,6 +48,16 @@ function TechIcon({ icon }) {
   )
 }
 
+const CATEGORY_LABEL = {
+  backend:  'Backend',
+  frontend: 'Frontend',
+  database: 'Base de datos',
+  language: 'Lenguaje',
+  devops:   'DevOps',
+  tool:     'Herramienta',
+  ai:       'IA / ML',
+}
+
 const container = { hidden: {}, visible: { transition: { staggerChildren: 0.04 } } }
 const item = { hidden: { opacity: 0, y: 14 }, visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] } } }
 const vp = { once: false, amount: 0.12 }
@@ -97,6 +107,7 @@ export default function TechStack() {
             >
               <TechIcon icon={t.icon} />
               <span className="ab-tech-name">{t.name}</span>
+              <span className="ab-tech-cat">{CATEGORY_LABEL[t.category] ?? t.category}</span>
               <span className="ab-tech-level">{t.level}</span>
             </motion.div>
           ))}

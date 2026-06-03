@@ -7,6 +7,8 @@ class TechnologyResponse(BaseModel):
     name: str
     icon: str | None = None
     category: str | None = None
+    level: str | None = None
+    color: str | None = None
 
     model_config = {"from_attributes": True}
 
