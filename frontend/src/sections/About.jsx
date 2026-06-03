@@ -20,14 +20,15 @@ export default function About() {
           letterSpacing: '-0.01em', margin: 0, maxWidth: '22ch',
           color: 'var(--ink)',
         }}>
-          Diseño y construyo interfaces donde la forma sigue al movimiento.
+          Desarrollo Full Stack con foco en bases de datos y sistemas funcionales.
         </p>
 
         <div className="reveal" style={{ '--d': '0.08s' }}>
           <p style={{ fontSize: 16.5, lineHeight: 1.65, color: 'var(--ink-2)', maxWidth: '52ch', margin: '0 0 16px' }}>
-            Soy desarrollador frontend con foco en producto. Me obsesionan los
-            detalles: la transición justa, el espacio que respira, el rendimiento
-            que no se nota porque simplemente funciona.
+            Estudiante de Ingeniería en Ciencias de la Computación en la UVG,
+            con experiencia en desarrollo Fullstack. Me especializo en bases
+            de datos, diseño estructural y sistemas funcionales. Disponible
+            para proyectos de medio tiempo o freelance.
           </p>
           <a className="btn ghost" href="/about">
             Saber más <Icon name="arrow" className="arr" width={16} height={16} />

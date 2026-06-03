@@ -84,22 +84,22 @@ function MobileHero() {
           Josué <span style={{ color: 'var(--accent)' }}>Hernández</span>
         </h1>
         <p style={{ fontSize: 'clamp(0.8rem, 3vw, 1rem)', fontWeight: 600, color: 'var(--ink-2)', margin: 0 }}>
-          Frontend Developer &amp; Diseñador de interfaces
+          Fullstack Developer &amp; Estudiante de Ingeniería CC
         </p>
         <p style={{ fontSize: 'clamp(0.75rem, 2.8vw, 0.9rem)', lineHeight: 1.6, color: 'var(--ink-3)', margin: 0 }}>
-          Construyo experiencias web limpias, rápidas y con carácter.
+          Desarrollo Full Stack con foco en bases de datos y sistemas funcionales.
         </p>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginTop: '0.25rem' }}>
-          <a className="chip" href="https://linkedin.com" target="_blank" rel="noreferrer">
+          <a className="chip" href="https://linkedin.com/in/josue-hernandez-gonzalez" target="_blank" rel="noreferrer">
             <Icon name="linkedin" /> LinkedIn
           </a>
-          <a className="chip" href="https://github.com" target="_blank" rel="noreferrer">
+          <a className="chip" href="https://github.com/her24770" target="_blank" rel="noreferrer">
             <Icon name="github" /> GitHub
           </a>
-          <a className="chip" href="mailto:hola@josue.dev">
+          <a className="chip" href="mailto:josuehernandez.fjbg@gmail.com">
             <Icon name="mail" /> Email
           </a>
-          <a className="chip cv" href="#" download>
+          <a className="chip cv" href="/assets/CV%20Josue%20Hern%C3%A1ndez.pdf" download="CV Josue Hernández.pdf">
             <Icon name="doc" /> CV
           </a>
         </div>
@@ -195,8 +195,9 @@ export default function Hero({ progress, activeSection, contentScroll, isMobile,
           position: 'absolute', top: '16%', right: '4%', width: '10.5rem',
           x: c1x, y: c1y, pointerEvents: 'auto',
         }}>
-          <div className="fc-label">Proyectos</div>
-          <div className="fc-big"><span className="accent">12</span> entregados</div>
+          <div className="fc-label">Promedio académico</div>
+          <div className="fc-big"><span className="accent">94</span> / 100</div>
+          <div style={{ fontSize: 11.5, color: 'var(--ink-3)', marginTop: 4, fontWeight: 600 }}>Cum Laude · UVG</div>
         </motion.div>
 
         <motion.div className="fcard" style={{
@@ -206,23 +207,20 @@ export default function Hero({ progress, activeSection, contentScroll, isMobile,
           <div className="fc-role-row">
             <img className="fc-ava" src={PHOTO} alt="" />
             <div>
-              <div className="fc-role-name">Josué Hernández</div>
-              <div className="fc-role-sub">Frontend Developer</div>
+              <div className="fc-role-name">Josue Hernández</div>
+              <div className="fc-role-sub">Fullstack Developer</div>
             </div>
           </div>
-          <div className="status"><span className="live" /> Disponible para proyectos</div>
+          <div className="status"><span className="live" /> Buscando trabajo · Freelance</div>
         </motion.div>
 
         <motion.div className="fcard" style={{
           position: 'absolute', bottom: '22%', right: '9%', width: '11.625rem',
           x: c3x, y: c3y, pointerEvents: 'auto',
         }}>
-          <div className="fc-label">Stack favorito</div>
-          <div className="bars">
-            {[60, 92, 44, 78, 96, 52].map((h, i) => (
-              <span key={i} style={{ height: h + '%', animationDelay: 0.15 + i * 0.08 + 's' }} />
-            ))}
-          </div>
+          <div className="fc-label">Ubicación</div>
+          <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--ink)', marginTop: 4, letterSpacing: '-0.01em' }}>Guatemala 🇬🇹</div>
+          <div style={{ fontSize: 11.5, color: 'var(--ink-3)', marginTop: 6, fontWeight: 600 }}>Remoto / Híbrido</div>
         </motion.div>
       </motion.div>
 
@@ -275,7 +273,7 @@ export default function Hero({ progress, activeSection, contentScroll, isMobile,
             color: 'var(--ink-2)',
             letterSpacing: '0.01em',
           }}>
-            Frontend Developer &amp; Diseñador de interfaces
+            Fullstack Developer &amp; Estudiante de Ingeniería CC
           </p>
         </motion.div>
 
@@ -293,8 +291,8 @@ export default function Hero({ progress, activeSection, contentScroll, isMobile,
               lineHeight: 1.6, color: 'var(--ink-3)', maxWidth: '34ch',
               pointerEvents: 'none',
             }}>
-              Construyo experiencias web limpias, rápidas y con carácter —
-              donde el movimiento tiene sentido y cada detalle suma.
+              Busco trabajo fijo de medio tiempo y hago freelance.
+              Desarrollo Full Stack · Remoto / Híbrido · Guatemala.
             </motion.p>
             <motion.div style={{ position: 'absolute', top: 0, left: 0, opacity: sideNavOpacity }}>
               <SideNav items={navItems} activeSection={activeSection} />
@@ -311,16 +309,16 @@ export default function Hero({ progress, activeSection, contentScroll, isMobile,
             display: 'flex', flexWrap: 'wrap',
             gap: '0.5rem', marginTop: '1.5rem',
           }}>
-            <a className="chip" href="https://linkedin.com" target="_blank" rel="noreferrer">
+            <a className="chip" href="https://linkedin.com/in/josue-hernandez-gonzalez" target="_blank" rel="noreferrer">
               <Icon name="linkedin" /> LinkedIn
             </a>
             <a className="chip" href="https://github.com" target="_blank" rel="noreferrer">
               <Icon name="github" /> GitHub
             </a>
-            <a className="chip" href="mailto:hola@josue.dev">
+            <a className="chip" href="mailto:josuehernandez.fjbg@gmail.com">
               <Icon name="mail" /> Email
             </a>
-            <a className="chip cv" href="#" download>
+            <a className="chip cv" href="/assets/CV%20Josue%20Hern%C3%A1ndez.pdf" download="CV Josue Hernández.pdf">
               <Icon name="doc" /> CV
             </a>
           </div>

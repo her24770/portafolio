@@ -31,3 +31,7 @@ export async function fetchProject(slug) {
   const p = await get(`/api/projects/${slug}`)
   return normalize(p, p.order ?? 0)
 }
+
+export async function fetchStack() {
+  return get('/api/stack')
+}

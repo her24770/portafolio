@@ -1,11 +1,13 @@
 import { useEffect } from 'react'
+import { useOutletContext } from 'react-router-dom'
 import About from './About'
 import Projects from './Projects'
 import Stack from './Stack'
 import Contact from './Contact'
 import Footer from './Footer'
 
-export default function ContentPanel({ onSectionChange }) {
+export default function ContentPanel() {
+  const { onSectionChange } = useOutletContext()
   useEffect(() => {
     // Reveal on scroll
     const revealEls = document.querySelectorAll('.reveal')

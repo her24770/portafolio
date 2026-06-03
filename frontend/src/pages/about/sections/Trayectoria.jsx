@@ -2,23 +2,11 @@ import { motion } from 'framer-motion'
 
 const JOBS = [
   {
-    period: '2022 — Presente',
-    title: 'Senior Fullstack Developer',
-    company: 'Innovate Tech Labs',
-    desc: 'Liderando la migración a microservicios y optimizando el rendimiento de la plataforma core en un 40%.',
-    current: true,
-  },
-  {
-    period: '2020 — 2022',
-    title: 'Software Engineer',
-    company: 'Nexus Digital Solutions',
-    desc: 'Desarrollo de APIs RESTful escalables y gestión de infraestructura en la nube.',
-  },
-  {
-    period: '2018 — 2020',
-    title: 'Junior Frontend Dev',
-    company: 'Creative Flow Studio',
-    desc: 'Especialización en interfaces interactivas y animaciones web fluidas.',
+    period: '2024',
+    title: 'Practicante Fullstack',
+    company: 'Allín Software — 400 h',
+    desc: 'Desarrollo de sistemas bancarios con Java, diseño de bases de datos relacionales, migración de sistemas legacy y trabajo colaborativo en equipo técnico.',
+    current: false,
   },
 ]
 

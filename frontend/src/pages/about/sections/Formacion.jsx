@@ -2,23 +2,17 @@ import { motion } from 'framer-motion'
 
 const EDUCATION = [
   {
-    period: '2015 — 2020',
-    title: 'Ingeniería en Sistemas',
+    period: '2024 — Hoy',
+    title: 'Lic. Ingeniería en CC y TI',
     institution: 'Universidad del Valle de Guatemala',
-    desc: 'Especialización en desarrollo de software y arquitectura de sistemas distribuidos.',
-    current: false,
+    desc: '5.° Semestre · Cum Laude · Promedio 94 · Becario Fundación Juan Bautista Gutiérrez.',
+    current: true,
   },
   {
-    period: '2023',
-    title: 'AWS Solutions Architect',
-    institution: 'Amazon Web Services',
-    desc: 'Certificación profesional en diseño de arquitecturas cloud escalables y seguras.',
-  },
-  {
-    period: '2022',
-    title: 'Meta Frontend Developer',
-    institution: 'Coursera / Meta',
-    desc: 'Programa intensivo de desarrollo frontend avanzado con React y diseño de interfaces.',
+    period: '2021 — 2023',
+    title: 'Perito en Computación',
+    institution: 'Centro Educativo Kinal',
+    desc: 'Estudiante distinguido · Promedio 95.',
   },
 ]
 

@@ -1,5 +1,5 @@
 import uuid
-from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy import Column, String, Boolean, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 from app.database import Base
@@ -22,3 +22,4 @@ class Technology(Base):
     name = Column(String, unique=True, nullable=False)
     icon = Column(String, nullable=True)
     category = Column(String, nullable=True)
+    my_stack = Column(Boolean, default=False, server_default="false")

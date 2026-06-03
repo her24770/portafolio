@@ -1,30 +1,22 @@
-import { useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ThemeProvider } from './contexts/ThemeContext'
-import HomeLayout from './components/HomeLayout'
+import MainLayout from './components/MainLayout'
 import ContentPanel from './sections/ContentPanel'
+import AboutContent from './pages/about/AboutContent'
 import ProjectsPage from './pages/projects/ProjectsPage'
 import ProjectDetail from './pages/projects/detail/ProjectDetail'
-import AboutPage from './pages/about/AboutPage'
-
-function HomePage() {
-  const [activeSection, setActiveSection] = useState('about')
-  return (
-    <HomeLayout activeSection={activeSection}>
-      <ContentPanel onSectionChange={setActiveSection} />
-    </HomeLayout>
-  )
-}
 
 export default function App() {
   return (
     <ThemeProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route element={<MainLayout />}>
+            <Route path="/" element={<ContentPanel />} />
+            <Route path="/about" element={<AboutContent />} />
+          </Route>
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/projects/:slug" element={<ProjectDetail />} />
-          <Route path="/about" element={<AboutPage />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
