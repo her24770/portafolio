@@ -1,30 +1,35 @@
+import { useState, useEffect, useRef } from 'react'
 import Icon from '../components/Icon'
 import { useIsMobile } from '../hooks/useIsMobile'
-
-const PROJECTS = [
-  {
-    n: '01', title: 'Spotify Connected App',
-    desc: 'Dashboard de visualización musical de alto rendimiento sobre el Web Playback SDK.',
-    tags: ['React', 'Web Audio'],
-  },
-  {
-    n: '02', title: 'Digital Dashboard v2',
-    desc: 'Plataforma de analítica empresarial con sincronización de datos en tiempo real.',
-    tags: ['Next.js', 'D3.js'],
-  },
-  {
-    n: '03', title: 'Aurora Commerce',
-    desc: 'Tienda headless con checkout en un solo paso y catálogo dinámico.',
-    tags: ['TypeScript', 'Stripe'],
-  },
-]
+import { fetchFeaturedProjects } from '../services/api'
 
 export default function Projects() {
   const isMobile = useIsMobile()
+  const [projects, setProjects] = useState([])
+  const sectionRef = useRef(null)
+
+  useEffect(() => {
+    fetchFeaturedProjects().then(setProjects).catch(() => {})
+  }, [])
+
+  useEffect(() => {
+    if (!projects.length || !sectionRef.current) return
+    const els = sectionRef.current.querySelectorAll('.reveal')
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((en) => {
+        if (en.isIntersecting) en.target.classList.add('in')
+        else en.target.classList.remove('in')
+      }),
+      { threshold: 0.15, rootMargin: '0px 0px -8% 0px' }
+    )
+    els.forEach((el) => io.observe(el))
+    return () => io.disconnect()
+  }, [projects])
 
   return (
     <section
       id="proyectos"
+      ref={sectionRef}
       style={{ padding: 'clamp(40px, 8vh, 96px) clamp(20px, 5vw, 90px)', maxWidth: 1080 }}
     >
       <div className="reveal" style={{
@@ -45,13 +50,15 @@ export default function Projects() {
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? 32 : 'clamp(64px, 11vh, 130px)' }}>
-        {PROJECTS.map((p, i) => (
+        {projects.map((p, i) => (
           isMobile ? (
-            <article key={p.n} className="reveal" style={{ '--d': i * 0.05 + 's' }}>
+            <article key={p.id} className="reveal" style={{ '--d': i * 0.05 + 's' }}>
               <div style={{
                 width: '100%', height: 200, borderRadius: 16, overflow: 'hidden',
                 background: 'linear-gradient(135deg, var(--bg) 0%, color-mix(in oklab, var(--accent) 8%, var(--bg)) 100%)',
-              }} />
+              }}>
+                {p.image && <img src={p.image} alt={p.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
+              </div>
               <div className="pcard" style={{ marginTop: 12 }}>
                 <span className="pnum">{p.n}</span>
                 <h3 className="ptitle" style={{ fontSize: 20 }}>{p.title}</h3>
@@ -61,20 +68,22 @@ export default function Projects() {
                     <span className={'tag' + (j === 0 ? ' k' : '')} key={t}>{t}</span>
                   ))}
                 </div>
-                <a className="plink" href="/projects">
+                <a className="plink" href={`/projects/${p.slug}`}>
                   Ver caso <Icon name="arrow" className="arr" width={15} height={15} />
                 </a>
               </div>
             </article>
           ) : (
-            <article key={p.n} className="reveal" style={{ position: 'relative', minHeight: 400, '--d': i * 0.05 + 's' }}>
+            <article key={p.id} className="reveal" style={{ position: 'relative', minHeight: 400, '--d': i * 0.05 + 's' }}>
               <div style={{
                 display: 'block', width: '74%', height: 400,
                 borderRadius: 20, overflow: 'hidden',
                 background: 'linear-gradient(135deg, var(--bg) 0%, color-mix(in oklab, var(--accent) 8%, var(--bg)) 100%)',
                 boxShadow: '0 40px 80px -44px rgba(27,26,21,0.45)',
                 marginLeft: i % 2 !== 0 ? 'auto' : undefined,
-              }} />
+              }}>
+                {p.image && <img src={p.image} alt={p.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
+              </div>
               <div className="pcard" style={{
                 position: 'absolute', bottom: 36,
                 width: 'min(370px, 56%)',
@@ -89,7 +98,7 @@ export default function Projects() {
                     <span className={'tag' + (j === 0 ? ' k' : '')} key={t}>{t}</span>
                   ))}
                 </div>
-                <a className="plink" href="/projects">
+                <a className="plink" href={`/projects/${p.slug}`}>
                   Ver caso <Icon name="arrow" className="arr" width={15} height={15} />
                 </a>
               </div>

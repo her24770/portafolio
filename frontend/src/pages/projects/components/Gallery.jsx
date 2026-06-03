@@ -81,7 +81,7 @@ export default function Gallery({ projects }) {
     ) + 120
     setTransitionData({ project, index, origin, orbR, far })
     setTimeout(() => {
-      navigate(`/projects/${index}`, { state: { origin } })
+      navigate(`/projects/${project.slug}`, { state: { origin } })
     }, 820)
   }, [navigate, projects])
 

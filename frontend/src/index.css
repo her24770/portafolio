@@ -543,6 +543,51 @@ button { font-family: inherit; cursor: pointer; }
   width: 100%; height: 100%; object-fit: cover; display: block; border: none;
 }
 
+/* ── Custom video player ── */
+.vid-wrap {
+  position: relative; width: 100%; height: 100%;
+  cursor: pointer; overflow: hidden; background: #000;
+}
+.vid-wrap video {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  /* hide any native browser UI */
+  -webkit-media-controls: none;
+}
+.vid-wrap video::-webkit-media-controls { display: none !important; }
+
+/* click feedback icon — centered, bursts out */
+.vid-icon-flash {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 12px rgba(0,0,0,0.5));
+}
+
+/* bottom strip */
+.vid-bottom {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  pointer-events: none;
+}
+.vid-status {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 10px 4px;
+  font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+}
+.vid-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--accent); flex-shrink: 0;
+  animation: pulse 1.8s ease-in-out infinite;
+}
+.vid-bar {
+  height: 2px; background: rgba(255,255,255,0.12); position: relative; overflow: hidden;
+}
+.vid-bar-fill {
+  position: absolute; inset: 0 auto 0 0;
+  background: var(--accent);
+  transition: width 0.15s linear;
+}
+
 /* scroll cue */
 .det-scrollcue {
   position: absolute; left: 50%; bottom: 1.25rem; transform: translateX(-50%);
@@ -579,8 +624,9 @@ button { font-family: inherit; cursor: pointer; }
 
 /* challenge quote */
 .det-statement {
-  font-size: clamp(22px, 2.6vw, 36px);
-  line-height: 1.22; font-weight: 600; letter-spacing: -0.025em; text-wrap: balance;
+  font-size: clamp(15px, 1.45vw, 20px);
+  line-height: 1.6; font-weight: 500; letter-spacing: -0.01em; text-wrap: pretty;
+  color: var(--ink-2);
 }
 .det-mark { color: var(--accent); }
 

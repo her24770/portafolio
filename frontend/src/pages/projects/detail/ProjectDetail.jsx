@@ -1,12 +1,13 @@
-import { useRef, useEffect, useContext } from 'react'
-import { useParams, useNavigate, useLocation } from 'react-router-dom'
+import { useRef, useEffect, useContext, useState } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { PROJECTS } from '../../../data/projects'
+import { fetchProject, fetchProjects } from '../../../services/api'
 import Navbar from '../../../components/Navbar'
 import Icon from '../../../components/Icon'
 import Reveal from './components/Reveal'
 import TechGrid from './components/TechGrid'
 import NextProject from './components/NextProject'
+import VideoPlayer from './components/VideoPlayer'
 import { DetailCtx } from './DetailContext'
 
 function Block({ num, kicker, tag, children }) {
@@ -41,12 +42,12 @@ function Prose({ text }) {
 }
 
 export default function ProjectDetail() {
-  const { id } = useParams()
+  const { slug } = useParams()
   const navigate = useNavigate()
-  const index = Number(id)
-  const p = PROJECTS[index]
-  const nextIndex = (index + 1) % PROJECTS.length
-  const next = PROJECTS[nextIndex]
+
+  const [p, setP] = useState(null)
+  const [allProjects, setAllProjects] = useState([])
+  const [loading, setLoading] = useState(true)
 
   const overlayRef = useRef(null)
   const heroRef    = useRef(null)
@@ -66,7 +67,26 @@ export default function ProjectDetail() {
     return () => window.removeEventListener('keydown', onKey)
   }, [navigate])
 
-  if (!p) { navigate('/projects'); return null }
+  useEffect(() => {
+    setLoading(true)
+    Promise.all([fetchProject(slug), fetchProjects()])
+      .then(([proj, all]) => { setP(proj); setAllProjects(all) })
+      .catch(() => navigate('/projects'))
+      .finally(() => setLoading(false))
+  }, [slug, navigate])
+
+  if (loading || !p) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', color: 'var(--muted)', fontFamily: 'var(--font-mono)', fontSize: 13 }}>
+        cargando proyecto…
+      </div>
+    )
+  }
+
+  const currentIndex = allProjects.findIndex(proj => proj.slug === slug)
+  const nextIndex = (currentIndex + 1) % allProjects.length
+  const next = allProjects[nextIndex] ?? allProjects[0]
+  const total = allProjects.length
 
   const statusDone = p.status !== 'in_progress'
   let sn = 0
@@ -74,7 +94,6 @@ export default function ProjectDetail() {
 
   return (
     <DetailCtx.Provider value={overlayRef}>
-      {/* ── Main detail overlay ── */}
       <motion.div
         ref={overlayRef}
         className="det-overlay"
@@ -92,7 +111,7 @@ export default function ProjectDetail() {
           </nav>
           <div className="det-nav-right">
             <span className="det-counter">
-              <strong>{p.n}</strong> / {String(PROJECTS.length).padStart(2, '0')}
+              <strong>{p.n}</strong> / {String(total).padStart(2, '0')}
             </span>
             <button className="det-back" onClick={() => navigate('/projects')}>
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -162,7 +181,6 @@ export default function ProjectDetail() {
                 </span>
               </div>
 
-              {/* Repo links in hero card */}
               {p.repo_urls?.length > 0 && (
                 <div className="det-stat-row">
                   <span className="det-stat-label">Código</span>
@@ -192,7 +210,7 @@ export default function ProjectDetail() {
               {p.video_url
                 ? /youtube|vimeo/.test(p.video_url)
                   ? <iframe src={p.video_url} allow="autoplay; fullscreen" allowFullScreen title={p.title} />
-                  : <video src={p.video_url} controls playsInline poster={p.image} />
+                  : <VideoPlayer src={p.video_url} poster={p.image} />
                 : <img src={p.image} alt={p.title.replace('\n', ' ')} />
               }
             </motion.div>
@@ -234,12 +252,6 @@ export default function ProjectDetail() {
             </Block>
           )}
 
-          {p.what_i_learned && (
-            <Block num={n()} kicker="Aprendizajes" tag="// what I learned">
-              <Prose text={p.what_i_learned} />
-            </Block>
-          )}
-
           {p.images?.length > 0 && (
             <Block num={n()} kicker="Galería" tag="// screenshots">
               <div className="det-shots">
@@ -252,7 +264,6 @@ export default function ProjectDetail() {
             </Block>
           )}
 
-          {/* Ficha */}
           <Block num={n()} kicker="Ficha" tag="// resumen">
             <div className="det-facts">
               <div className="det-fact"><dt>Rol</dt><dd>{p.role}</dd></div>
@@ -283,7 +294,12 @@ export default function ProjectDetail() {
           </Block>
         </div>
 
-        <NextProject project={next} onNavigate={() => navigate(`/projects/${nextIndex}`)} />
+        {next && (
+          <NextProject
+            project={next}
+            onNavigate={() => navigate(`/projects/${next.slug}`)}
+          />
+        )}
       </motion.div>
     </DetailCtx.Provider>
   )

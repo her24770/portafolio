@@ -14,13 +14,13 @@ export default function NextProject({ project, onNavigate }) {
         >
           {/* Left: orb image */}
           <div className="det-next-orb" onClick={onNavigate}>
-            <img src={project.image} alt={project.title.replace('\n', ' ')} />
+            <img src={project.image} alt={project.title} />
           </div>
 
           {/* Right: text */}
           <div className="det-next-text">
             <p className="det-next-kicker">siguiente proyecto</p>
-            <h2 className="det-next-title">{project.title.replace('\n', ' ')}</h2>
+            <h2 className="det-next-title">{project.title}</h2>
             <p className="det-next-desc">{project.desc}</p>
             <button className="det-next-cta" onClick={onNavigate}>
               Ver proyecto <Icon name="arrow" width={15} height={15} />

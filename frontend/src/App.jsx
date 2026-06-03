@@ -22,7 +22,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/projects" element={<ProjectsPage />} />
-          <Route path="/projects/:id" element={<ProjectDetail />} />
+          <Route path="/projects/:slug" element={<ProjectDetail />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
