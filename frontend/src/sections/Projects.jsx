@@ -49,6 +49,29 @@ export default function Projects() {
         </a>
       </div>
 
+      <div className="reveal" style={{
+        display: 'inline-flex', alignItems: 'center', gap: 10,
+        background: 'color-mix(in oklab, var(--accent) 8%, var(--surface))',
+        border: '1px solid color-mix(in oklab, var(--accent) 22%, var(--line))',
+        borderRadius: 999, padding: '8px 16px 8px 12px',
+        marginBottom: 'clamp(28px, 5vh, 52px)',
+      }}>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+          style={{ color: 'var(--accent)', flexShrink: 0 }}>
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="2" y1="12" x2="22" y2="12"/>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+        <span style={{ fontSize: 13, fontWeight: 500, color: 'var(--ink-2)' }}>
+          Todos los proyectos están desplegados en producción — puedes ver la demo en vivo desde{' '}
+          <a href="/projects" style={{ color: 'var(--accent)', fontWeight: 600, textDecoration: 'none' }}>
+            Ver todos
+          </a>
+          .
+        </span>
+      </div>
+
       <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? 32 : 'clamp(64px, 11vh, 130px)' }}>
         {projects.map((p, i) => (
           isMobile ? (
@@ -69,7 +92,7 @@ export default function Projects() {
                   ))}
                 </div>
                 <a className="plink" href={`/projects/${p.slug}`}>
-                  Ver caso <Icon name="arrow" className="arr" width={15} height={15} />
+                  Ver proyecto <Icon name="arrow" className="arr" width={15} height={15} />
                 </a>
               </div>
             </article>
@@ -99,7 +122,7 @@ export default function Projects() {
                   ))}
                 </div>
                 <a className="plink" href={`/projects/${p.slug}`}>
-                  Ver caso <Icon name="arrow" className="arr" width={15} height={15} />
+                  Ver proyecto <Icon name="arrow" className="arr" width={15} height={15} />
                 </a>
               </div>
             </article>
