@@ -4,9 +4,10 @@ import AboutContent from './AboutContent'
 
 const ABOUT_NAV = [
   { id: 'intro',        label: 'Sobre mí'    },
-  { id: 'stack-ab',     label: 'Stack'       },
-  { id: 'trayectoria',  label: 'Trayectoria' },
   { id: 'formacion',    label: 'Formación'   },
+  { id: 'fortalezas',   label: 'Fortalezas'  },
+  { id: 'trayectoria',  label: 'Trayectoria' },
+  { id: 'stack-ab',     label: 'Stack'       },
 ]
 
 export default function AboutPage() {

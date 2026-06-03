@@ -37,7 +37,7 @@ export default function Formacion() {
         initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
         viewport={vp} transition={{ duration: 0.6, ease }}
       >
-        <span className="pip" /> 04 — Estudios
+        <span className="pip" /> 02 — Formación
       </motion.p>
       <motion.h2 className="ab-section-heading"
         initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}

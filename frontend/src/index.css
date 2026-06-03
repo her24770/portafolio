@@ -1010,7 +1010,7 @@ button { font-family: inherit; cursor: pointer; }
 .ab-timeline::before {
   content: '';
   position: absolute;
-  left: 7.25rem;
+  left: 14rem;
   top: 8px;
   bottom: 0;
   width: 1px;
@@ -1019,7 +1019,7 @@ button { font-family: inherit; cursor: pointer; }
 
 .ab-tl-item {
   display: grid;
-  grid-template-columns: 7.25rem 1fr;
+  grid-template-columns: 14rem 1fr;
   gap: 2.25rem;
   padding-bottom: clamp(1.625rem, 3.5vh, 2.5rem);
   position: relative;
@@ -1029,7 +1029,7 @@ button { font-family: inherit; cursor: pointer; }
 
 .ab-tl-dot {
   position: absolute;
-  left: calc(7.25rem - 4px);
+  left: calc(14rem - 4px);
   top: 5px;
   width: 9px;
   height: 9px;
@@ -1047,9 +1047,10 @@ button { font-family: inherit; cursor: pointer; }
 
 .ab-tl-period-col {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.5rem;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.625rem;
   padding-right: 0.875rem;
   padding-top: 2px;
 }
@@ -1059,22 +1060,23 @@ button { font-family: inherit; cursor: pointer; }
   font-weight: 600;
   color: var(--ink-3);
   letter-spacing: 0.04em;
-  line-height: 1.5;
+  line-height: 1.4;
   text-align: right;
   margin: 0;
 }
 
 .ab-tl-logo {
-  width: 38px;
-  height: 38px;
+  width: 96px;
+  height: 96px;
   border-radius: 50%;
   background: #ffffff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.07);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.07);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   flex-shrink: 0;
+  order: -1;
 }
 .ab-tl-logo img {
   width: 72%;
@@ -1138,10 +1140,11 @@ button { font-family: inherit; cursor: pointer; }
   .ab-intro-grid { grid-template-columns: 1fr; }
   .ab-photo-wrap { max-width: 260px; margin: 0 auto; }
   .ab-tech-grid  { grid-template-columns: repeat(2, 1fr); }
-  .ab-timeline::before { left: 5.5rem; }
-  .ab-tl-item { grid-template-columns: 5.5rem 1fr; gap: 1.5rem; }
-  .ab-tl-dot  { left: calc(5.5rem - 4px); }
+  .ab-timeline::before { left: 10rem; }
+  .ab-tl-item { grid-template-columns: 10rem 1fr; gap: 1.25rem; }
+  .ab-tl-dot  { left: calc(10rem - 4px); }
   .ab-tl-period { font-size: 10px; }
+  .ab-tl-logo { width: 64px; height: 64px; }
 }
 
 /* ── mobile ── */

@@ -23,7 +23,7 @@ export default function Trayectoria() {
         initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
         viewport={vp} transition={{ duration: 0.6, ease }}
       >
-        <span className="pip" /> 03 — Experiencia
+        <span className="pip" /> 04 — Trayectoria
       </motion.p>
       <motion.h2 className="ab-section-heading"
         initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}

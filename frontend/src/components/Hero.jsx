@@ -315,7 +315,7 @@ export default function Hero({ progress, activeSection, contentScroll, isMobile,
         >
           <div style={{
             display: 'flex', flexWrap: 'wrap',
-            gap: '0.5rem', marginTop: '3rem',
+            gap: '0.5rem', marginTop: '5rem',
           }}>
             <a className="chip" href="https://linkedin.com/in/josue-hernandez-gonzalez" target="_blank" rel="noreferrer">
               <Icon name="linkedin" /> LinkedIn

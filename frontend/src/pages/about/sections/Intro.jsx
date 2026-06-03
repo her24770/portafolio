@@ -20,20 +20,19 @@ export default function Intro() {
             initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={vp} transition={{ duration: 0.75, ease, delay: 0.06 }}
           >
-            Desde 2021 convirtiendo problemas reales{' '}
-            <em>en software que la gente usa</em>.
+            Estudiante en Ingeniería en Computación.{' '}
+            <em>Cinco años de práctica, once proyectos, varios en producción.</em>
           </motion.h2>
 
           <motion.p className="ab-bio"
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={vp} transition={{ duration: 0.75, ease, delay: 0.14 }}
           >
-            Empecé con informática en el colegio, donde entendí que los
-            computadores son herramientas, no magia. Desde 2021 estudio
-            Ingeniería en Computación y Tecnologías de la Información en la UVG,
-            y convertí ese interés en algo más concreto: sistemas con lógica
-            real, bases de datos con estructura pensada y código que funciona
-            más allá de la entrega académica.
+            Estudio Ingeniería en Computación y Tecnologías de la Información
+            en la UVG. Graduado de un perito técnico en informática en KINAL, 5 años con
+            base en programación,buscando que cada proyecto académico se convirtiera en algo funcional: sistemas
+            con autenticación real, bases de datos con estructura pensada y código
+            que se despliega y se mantiene en mi propio server con todos mis proyectos.
           </motion.p>
 
           <motion.p className="ab-bio"
@@ -41,10 +40,11 @@ export default function Intro() {
             viewport={vp} transition={{ duration: 0.75, ease, delay: 0.2 }}
             style={{ marginTop: '1rem' }}
           >
-            Me importa entender el problema antes de elegir la tecnología. Por
-            eso algunos proyectos usan grafos, otros llevan los permisos hasta
-            el nivel de PostgreSQL, y alguno tiene una IA que recuerda el
-            contexto de una conversación en lugar de responder siempre igual.
+            Trabajo partiendo de la arquitectura y el modelo de datos antes de
+            escribir código. Eso llevó a decisiones concretas: grafos para un
+            sistema de recomendación musical, permisos a nivel de PostgreSQL en
+            lugar de solo middleware, o una IA con memoria contextual y
+            personalidad configurable en lugar de un wrapper genérico de API.
           </motion.p>
         </div>
 
