@@ -2,11 +2,22 @@ from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.database import get_db
+from app.config import get_settings
 from app.services import project_service
 from app.schemas.technology import TechnologyResponse, TechnologyWithImportance
 from app.schemas.project import ProjectFeaturedResponse, ProjectListItem, ProjectDetailResponse
 
 router = APIRouter(prefix="/api/projects", tags=["projects"])
+
+
+def _url(path: str | None) -> str | None:
+    if not path:
+        return None
+    return f"{get_settings().r2_public_url}/{path}"
+
+
+def _urls(paths: list) -> list:
+    return [_url(p) for p in paths if p]
 
 
 def _build_techs_with_importance(project) -> List[TechnologyWithImportance]:
@@ -44,7 +55,7 @@ def get_featured(db: Session = Depends(get_db)):
             title=p.title,
             slug=p.slug,
             description=p.description,
-            thumbnail_url=p.thumbnail_url,
+            thumbnail_url=_url(p.thumbnail_url),
             order=p.order,
             technologies=_build_primary_techs(p),
         )
@@ -66,7 +77,7 @@ def list_projects(
             slug=p.slug,
             description=p.description,
             content=p.content,
-            thumbnail_url=p.thumbnail_url,
+            thumbnail_url=_url(p.thumbnail_url),
             category=p.category,
             demo_url=p.demo_url,
             repo_urls=p.repo_urls or [],
@@ -100,9 +111,9 @@ def get_project(slug: str, db: Session = Depends(get_db)):
         slug=p.slug,
         description=p.description,
         content=p.content,
-        thumbnail_url=p.thumbnail_url,
-        images=p.images or [],
-        video_url=p.video_url,
+        thumbnail_url=_url(p.thumbnail_url),
+        images=_urls(p.images or []),
+        video_url=_url(p.video_url),
         category=p.category,
         demo_url=p.demo_url,
         repo_urls=p.repo_urls or [],

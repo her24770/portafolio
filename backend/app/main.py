@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from app.config import get_settings
+from app.models import Project, Technology, ProjectTechnology, ContactMessage  # noqa: F401 – ensures SQLAlchemy mappers are registered
 from app.routers import projects, contact, chat, upload
 
 settings = get_settings()

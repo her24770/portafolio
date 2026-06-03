@@ -31,7 +31,7 @@ def _upload(key: str, file: UploadFile) -> str:
         key,
         ExtraArgs={"ContentType": file.content_type},
     )
-    return f"{settings.r2_public_url}/{key}"
+    return key
 
 
 def upload_thumbnail(slug: str, file: UploadFile) -> str:

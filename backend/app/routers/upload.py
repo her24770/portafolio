@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
 from sqlalchemy.orm import Session
 from app.database import get_db
+from app.config import get_settings
 from app.services import project_service, upload_service
 
 router = APIRouter(prefix="/api/upload", tags=["upload"])
@@ -20,29 +21,33 @@ def _get_project_or_404(db: Session, slug: str):
     return project
 
 
+def _full_url(path: str) -> str:
+    return f"{get_settings().r2_public_url}/{path}"
+
+
 @router.post("/thumbnail/{slug}", status_code=201)
 def upload_thumbnail(slug: str, file: UploadFile = File(...), db: Session = Depends(get_db)):
     project = _get_project_or_404(db, slug)
-    url = upload_service.upload_thumbnail(slug, file)
-    project.thumbnail_url = url
+    path = upload_service.upload_thumbnail(slug, file)
+    project.thumbnail_url = path
     db.commit()
-    return {"url": url}
+    return {"url": _full_url(path)}
 
 
 @router.post("/image/{slug}", status_code=201)
 def upload_image(slug: str, file: UploadFile = File(...), db: Session = Depends(get_db)):
     project = _get_project_or_404(db, slug)
     index = len(project.images or []) + 1
-    url = upload_service.upload_image(slug, file, index)
-    project.images = (project.images or []) + [url]
+    path = upload_service.upload_image(slug, file, index)
+    project.images = (project.images or []) + [path]
     db.commit()
-    return {"url": url}
+    return {"url": _full_url(path)}
 
 
 @router.post("/video/{slug}", status_code=201)
 def upload_video(slug: str, file: UploadFile = File(...), db: Session = Depends(get_db)):
     project = _get_project_or_404(db, slug)
-    url = upload_service.upload_video(slug, file)
-    project.video_url = url
+    path = upload_service.upload_video(slug, file)
+    project.video_url = path
     db.commit()
-    return {"url": url}
+    return {"url": _full_url(path)}
