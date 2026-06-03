@@ -5,6 +5,7 @@ import ContentPanel from './sections/ContentPanel'
 import AboutContent from './pages/about/AboutContent'
 import ProjectsPage from './pages/projects/ProjectsPage'
 import ProjectDetail from './pages/projects/detail/ProjectDetail'
+import ChatWidget from './components/ChatWidget'
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/projects/:slug" element={<ProjectDetail />} />
         </Routes>
+        <ChatWidget />
       </BrowserRouter>
     </ThemeProvider>
   )
