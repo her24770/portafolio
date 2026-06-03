@@ -3,6 +3,16 @@ from sqlalchemy.orm import Session
 from app.models.project import Project
 
 
+def get_featured_projects(db: Session) -> List[Project]:
+    return (
+        db.query(Project)
+        .filter(Project.featured == True)
+        .order_by(Project.order.asc())
+        .limit(3)
+        .all()
+    )
+
+
 def get_all_projects(
     db: Session,
     featured: Optional[bool] = None,

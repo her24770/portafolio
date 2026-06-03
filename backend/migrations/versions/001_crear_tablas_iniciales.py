@@ -49,6 +49,7 @@ def upgrade() -> None:
         sa.Column("team_size", sa.Integer(), nullable=True),
         sa.Column("team_description", sa.Text(), nullable=True),
         sa.Column("role", sa.String(), nullable=True),
+        sa.Column("video_url", sa.String(), nullable=True),
         sa.Column("created_at", sa.TIMESTAMP(), server_default=sa.text("now()")),
         sa.UniqueConstraint("slug"),
     )

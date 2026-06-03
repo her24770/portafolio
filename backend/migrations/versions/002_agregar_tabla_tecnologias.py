@@ -105,6 +105,7 @@ def upgrade() -> None:
             sa.ForeignKey("technologies.id", ondelete="CASCADE"),
             primary_key=True,
         ),
+        sa.Column("importance", sa.String(), server_default="secondary"),
     )
 
     rows = ", ".join(

@@ -16,6 +16,7 @@ class Project(Base):
     content = Column(Text, nullable=True)
     thumbnail_url = Column(String, nullable=True)
     images = Column(JSONB, default=list, server_default="[]")
+    video_url = Column(String, nullable=True)
     category = Column(String, nullable=True)
     demo_url = Column(String, nullable=True)
     repo_urls = Column(JSONB, default=list, server_default="[]")
@@ -34,4 +35,8 @@ class Project(Base):
     role = Column(String, nullable=True)
     created_at = Column(TIMESTAMP, server_default=func.now())
 
-    technologies = relationship("Technology", secondary="project_technologies", lazy="joined")
+    project_techs = relationship("ProjectTechnology", lazy="joined", cascade="all, delete-orphan")
+
+    @property
+    def technologies(self):
+        return [pt.technology for pt in self.project_techs]

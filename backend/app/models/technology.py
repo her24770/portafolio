@@ -1,15 +1,18 @@
 import uuid
-from sqlalchemy import Column, String, Table, ForeignKey
+from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 from app.database import Base
 
-project_technologies = Table(
-    "project_technologies",
-    Base.metadata,
-    Column("project_id", UUID(as_uuid=True), ForeignKey("projects.id", ondelete="CASCADE"), primary_key=True),
-    Column("technology_id", UUID(as_uuid=True), ForeignKey("technologies.id", ondelete="CASCADE"), primary_key=True),
-)
+
+class ProjectTechnology(Base):
+    __tablename__ = "project_technologies"
+
+    project_id = Column(UUID(as_uuid=True), ForeignKey("projects.id", ondelete="CASCADE"), primary_key=True)
+    technology_id = Column(UUID(as_uuid=True), ForeignKey("technologies.id", ondelete="CASCADE"), primary_key=True)
+    importance = Column(String, default="secondary", server_default="secondary")
+
+    technology = relationship("Technology", lazy="joined")
 
 
 class Technology(Base):
