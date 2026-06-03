@@ -1,63 +1,87 @@
 import json
 from pathlib import Path
 from sqlalchemy.orm import Session
-import anthropic
+from openai import OpenAI
 
 from app.config import get_settings
 from app.services.project_service import get_all_projects, get_project_by_slug
 
 settings = get_settings()
 ABOUT_DIR = Path(__file__).parent.parent.parent / "about"
-MODEL = "claude-sonnet-4-6"
+MODEL = "gpt-4o"
 
 TOOLS = [
     {
-        "name": "get_bio",
-        "description": "Obtiene la presentación personal del desarrollador: nombre, rol, ubicación, disponibilidad y contacto",
-        "input_schema": {"type": "object", "properties": {}, "required": []},
+        "type": "function",
+        "function": {
+            "name": "get_bio",
+            "description": "Obtiene la presentación personal del desarrollador: nombre, rol, ubicación, disponibilidad y contacto",
+            "parameters": {"type": "object", "properties": {}, "required": []},
+        },
     },
     {
-        "name": "get_skills",
-        "description": "Obtiene información sobre el perfil técnico del desarrollador, sus áreas de fortaleza y cómo trabaja",
-        "input_schema": {"type": "object", "properties": {}, "required": []},
+        "type": "function",
+        "function": {
+            "name": "get_skills",
+            "description": "Obtiene información sobre el perfil técnico del desarrollador, sus áreas de fortaleza y cómo trabaja",
+            "parameters": {"type": "object", "properties": {}, "required": []},
+        },
     },
     {
-        "name": "get_experience",
-        "description": "Obtiene la experiencia laboral del desarrollador: empresas, roles y responsabilidades",
-        "input_schema": {"type": "object", "properties": {}, "required": []},
+        "type": "function",
+        "function": {
+            "name": "get_experience",
+            "description": "Obtiene la experiencia laboral del desarrollador: empresas, roles y responsabilidades",
+            "parameters": {"type": "object", "properties": {}, "required": []},
+        },
     },
     {
-        "name": "get_education",
-        "description": "Obtiene la formación académica del desarrollador: universidad, carrera y certificaciones",
-        "input_schema": {"type": "object", "properties": {}, "required": []},
+        "type": "function",
+        "function": {
+            "name": "get_education",
+            "description": "Obtiene la formación académica del desarrollador: universidad, carrera y certificaciones",
+            "parameters": {"type": "object", "properties": {}, "required": []},
+        },
     },
     {
-        "name": "get_services",
-        "description": "Obtiene los servicios freelance que ofrece el desarrollador y cómo contratarlo",
-        "input_schema": {"type": "object", "properties": {}, "required": []},
+        "type": "function",
+        "function": {
+            "name": "get_services",
+            "description": "Obtiene los servicios freelance que ofrece el desarrollador y cómo contratarlo",
+            "parameters": {"type": "object", "properties": {}, "required": []},
+        },
     },
     {
-        "name": "get_values",
-        "description": "Obtiene los valores, forma de trabajar y qué motiva al desarrollador",
-        "input_schema": {"type": "object", "properties": {}, "required": []},
+        "type": "function",
+        "function": {
+            "name": "get_values",
+            "description": "Obtiene los valores, forma de trabajar y qué motiva al desarrollador",
+            "parameters": {"type": "object", "properties": {}, "required": []},
+        },
     },
     {
-        "name": "get_all_projects",
-        "description": "Obtiene la lista completa de proyectos del portafolio",
-        "input_schema": {"type": "object", "properties": {}, "required": []},
+        "type": "function",
+        "function": {
+            "name": "get_all_projects",
+            "description": "Obtiene la lista completa de proyectos del portafolio",
+            "parameters": {"type": "object", "properties": {}, "required": []},
+        },
     },
     {
-        "name": "get_project_by_slug",
-        "description": "Obtiene el detalle completo de un proyecto específico por su slug",
-        "input_schema": {
-            "type": "object",
-            "properties": {
-                "slug": {
-                    "type": "string",
-                    "description": "El slug único del proyecto, ej: 'uvg-help'",
-                }
+        "type": "function",
+        "function": {
+            "name": "get_project_by_slug",
+            "description": "Obtiene el detalle completo de un proyecto específico por su slug",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "slug": {
+                        "type": "string",
+                        "description": "El slug único del proyecto, ej: 'uvg-help'",
+                    }
+                },
+                "required": ["slug"],
             },
-            "required": ["slug"],
         },
     },
 ]
@@ -152,40 +176,44 @@ Proyectos disponibles (resumen):
 
 Responde siempre en el idioma en que te hablen."""
 
-    client = anthropic.Anthropic(api_key=settings.anthropic_api_key)
-    messages = [{"role": "user", "content": user_message}]
+    client = OpenAI(api_key=settings.openai_api_key)
+    messages = [
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_message},
+    ]
 
     while True:
-        response = client.messages.create(
+        response = client.chat.completions.create(
             model=MODEL,
-            max_tokens=1024,
-            system=system_prompt,
             tools=TOOLS,
             messages=messages,
         )
 
-        if response.stop_reason == "end_turn":
-            for block in response.content:
-                if hasattr(block, "text"):
-                    return block.text
-            return ""
+        message = response.choices[0].message
 
-        if response.stop_reason != "tool_use":
-            break
+        if not message.tool_calls:
+            return message.content or ""
 
-        messages.append({"role": "assistant", "content": response.content})
-        tool_results = []
+        messages.append({
+            "role": "assistant",
+            "content": message.content,
+            "tool_calls": [
+                {
+                    "id": tc.id,
+                    "type": "function",
+                    "function": {"name": tc.function.name, "arguments": tc.function.arguments},
+                }
+                for tc in message.tool_calls
+            ],
+        })
 
-        for block in response.content:
-            if block.type != "tool_use":
-                continue
-            result = _handle_tool(db, block.name, block.input)
-            tool_results.append({
-                "type": "tool_result",
-                "tool_use_id": block.id,
+        for tc in message.tool_calls:
+            tool_input = json.loads(tc.function.arguments)
+            result = _handle_tool(db, tc.function.name, tool_input)
+            messages.append({
+                "role": "tool",
+                "tool_call_id": tc.id,
                 "content": json.dumps(result, ensure_ascii=False),
             })
-
-        messages.append({"role": "user", "content": tool_results})
 
     return ""
