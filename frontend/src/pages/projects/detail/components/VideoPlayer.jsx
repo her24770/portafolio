@@ -4,6 +4,7 @@ import { DetailCtx } from '../DetailContext'
 
 export default function VideoPlayer({ src, poster }) {
   const videoRef   = useRef(null)
+  const wrapRef    = useRef(null)
   const scrollRoot = useContext(DetailCtx)
 
   const [playing,  setPlaying]  = useState(false)
@@ -42,6 +43,16 @@ export default function VideoPlayer({ src, poster }) {
     }
   }, [])
 
+  const handleMetadata = () => {
+    const video = videoRef.current
+    const container = wrapRef.current?.closest('.det-media')
+    if (!video || !container) return
+    const { videoWidth, videoHeight } = video
+    if (videoWidth && videoHeight) {
+      container.style.aspectRatio = `${videoWidth} / ${videoHeight}`
+    }
+  }
+
   const handleClick = () => {
     const video = videoRef.current
     if (!video) return
@@ -53,7 +64,7 @@ export default function VideoPlayer({ src, poster }) {
   }
 
   return (
-    <div className="vid-wrap" onClick={handleClick}>
+    <div ref={wrapRef} className="vid-wrap" onClick={handleClick}>
       <video
         ref={videoRef}
         src={src}
@@ -61,6 +72,7 @@ export default function VideoPlayer({ src, poster }) {
         muted
         playsInline
         loop
+        onLoadedMetadata={handleMetadata}
       />
 
       {/* Click feedback — icon bursts then fades */}

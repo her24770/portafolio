@@ -548,7 +548,7 @@ button { font-family: inherit; cursor: pointer; }
   cursor: pointer; overflow: hidden; background: #000;
 }
 .vid-wrap video {
-  width: 100%; height: 100%; object-fit: cover; display: block;
+  width: 100%; height: 100%; object-fit: contain; display: block;
   /* hide any native browser UI */
   -webkit-media-controls: none;
 }
